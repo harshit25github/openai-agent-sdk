@@ -1,0 +1,31 @@
+{
+  "name": "ph-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+    "dependencies": {
+    "@openai/agents": "^0.0.17",
+    "@openai/agents-core": "^0.0.17",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "@types/readline-sync": "^1.4.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
