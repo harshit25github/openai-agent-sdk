@@ -190,18 +190,18 @@ export const FlightSearchSchema = z.object({
   origin: z.string().describe('Departure city or airport code'),
   destination: z.string().describe('Arrival city or airport code'),
   departureDate: z.string().describe('Departure date (YYYY-MM-DD)'),
-  returnDate: z.string().optional().describe('Return date for round trips'),
+  returnDate: z.string().optional().nullable().describe('Return date for round trips'),
   passengers: z.object({
     adults: z.number().default(1),
     children: z.array(z.number()).default([]),
     infants: z.number().default(0)
   }),
   preferences: z.object({
-    class: z.enum(['economy', 'premium', 'business', 'first']).optional(),
-    maxStops: z.number().max(2).optional(),
-    airlines: z.array(z.string()).optional(),
-    timeOfDay: z.enum(['morning', 'afternoon', 'evening', 'red-eye']).optional()
-  }).optional()
+    class: z.enum(['economy', 'premium', 'business', 'first']).optional().nullable(),
+    maxStops: z.number().max(2).optional().nullable(),
+    airlines: z.array(z.string()).optional().nullable(),
+    timeOfDay: z.enum(['morning', 'afternoon', 'evening', 'red-eye']).optional().nullable()
+  }).optional().nullable()
 });
 
 export const HotelSearchSchema = z.object({
@@ -214,13 +214,13 @@ export const HotelSearchSchema = z.object({
   }),
   preferences: z.object({
     priceRange: z.object({
-      min: z.number().optional(),
-      max: z.number().optional()
-    }).optional(),
-    starRating: z.number().min(1).max(5).optional(),
-    amenities: z.array(z.string()).optional(),
-    propertyType: z.enum(['hotel', 'apartment', 'resort', 'hostel']).optional()
-  }).optional()
+      min: z.number().optional().nullable(),
+      max: z.number().optional().nullable()
+    }).optional().nullable(),
+    starRating: z.number().min(1).max(5).optional().nullable(),
+    amenities: z.array(z.string()).optional().nullable(),
+    propertyType: z.enum(['hotel', 'apartment', 'resort', 'hostel']).optional().nullable()
+  }).optional().nullable()
 });
 
 export const DestinationInfoSchema = z.object({
@@ -228,12 +228,12 @@ export const DestinationInfoSchema = z.object({
   travelDates: z.object({
     start: z.string(),
     end: z.string()
-  }).optional(),
-  interests: z.array(z.string()).optional(),
+  }).optional().nullable(),
+  interests: z.array(z.string()).optional().nullable(),
   infoTypes: z.array(z.enum([
     'weather', 'events', 'attractions', 'restaurants', 
     'transportation', 'safety', 'culture'
-  ])).optional()
+  ])).optional().nullable()
 });
 
 // ============= Memory Storage Types =============
