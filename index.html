@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Agent Streaming Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    #output { white-space: pre-wrap; padding: 10px; background: #fff; border: 1px solid #ccc; }
+    input, button { padding: 8px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h2>Travel Agent Streaming Demo</h2>
+  <input id="query" type="text" placeholder="Ask about a trip..." size="50">
+  <button onclick="ask()">Ask</button>
+
+  <h3>Response:</h3>
+  <div id="output"></div>
+
+  <script>
+    function ask() {
+      const query = document.getElementById("query").value;
+      const output = document.getElementById("output");
+      output.textContent = ""; // clear old
+
+      const evtSource = new EventSource(`http://localhost:3000/travel?q=${encodeURIComponent(query)}`);
+
+      evtSource.onmessage = (e) => {
+        if (e.data === "[DONE]") {
+          evtSource.close();
+        } else {
+          output.textContent += e.data;
+        }
+      };
+
+      evtSource.onerror = (err) => {
+        console.error("Stream error:", err);
+        evtSource.close();
+      };
+    }
+  </script>
+</body>
+</html>

@@ -5,18 +5,18 @@
     "content": [
       {
         "type": "input_text",
-        "text": "I want some travel related asistant from u"
+        "text": "what is react"
       }
     ]
   },
   {
-    "id": "msg_68b5679dcfc481a0a4e99e3d7344bf1f0f274fee29645858",
+    "id": "msg_68b59711a8088194af47340d6565853d05b70326209411b8",
     "type": "message",
     "role": "assistant",
     "content": [
       {
         "type": "output_text",
-        "text": "Question: I want some travel related assistant from you.\nThought: The user is seeking general travel-related assistance but hasn't specified the exact type of help needed.\nClassification: general_query\nDelegation: I should ask the user for more details on what kind of travel assistance they need to route the request properly.\n\nHow can I assist you with your travel plans today? Are you looking for help with booking flights, finding hotels, planning an itinerary, or something else?",
+        "text": "I specialize in helping with travel-related queries. If you have any questions or need assistance with travel plans, feel free to ask!",
         "annotations": [],
         "logprobs": []
       }
@@ -30,322 +30,18 @@
     "content": [
       {
         "type": "input_text",
-        "text": "Please plan me a trip  first I seeking to travel to UK"
+        "text": "can u tell me what is Nodejs"
       }
     ]
   },
   {
-    "type": "function_call",
-    "id": "fc_68b567cb12c081a08c10fe5df94629170f274fee29645858",
-    "callId": "call_UWJ7wuwF0nw4aGCB9RqzGuUP",
-    "name": "transfer_to_Trip_Planner_Agent",
-    "status": "completed",
-    "arguments": "{}",
-    "providerData": {
-      "id": "fc_68b567cb12c081a08c10fe5df94629170f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "transfer_to_Trip_Planner_Agent",
-    "callId": "call_UWJ7wuwF0nw4aGCB9RqzGuUP",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"assistant\":\"Trip Planner Agent\"}"
-    }
-  },
-  {
-    "id": "msg_68b567cd1a3081a0b1e79678dd956bde0f274fee29645858",
+    "id": "msg_68b5973349d88194b010e21471fd173d05b70326209411b8",
     "type": "message",
     "role": "assistant",
     "content": [
       {
         "type": "output_text",
-        "text": "Great! I'd love to help you plan your trip to the UK. To get started and tailor the plan perfectly for you, could you please share a bit more about your travel preferences?\n\n1. What kind of experience are you looking for in the UK? (e.g., cultural, historical, nature, shopping, food, nightlife, etc.)\n2. Are you traveling alone or with others? If with others, how many and any special needs?\n3. What is your budget level for the trip? (economy, mid-range, luxury)\n4. What type of accommodation do you prefer? (hotel, hostel, apartment, boutique, etc.)\n5. Any dietary restrictions or accessibility needs?\n6. How many days are you planning to spend in the UK?\n7. Any must-see places or specific cities you want to visit?\n\nThis info will help me create a personalized and enjoyable itinerary for you!",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "lookig to explore culture and nature"
-      }
-    ]
-  },
-  {
-    "id": "msg_68b5680cca7481a092786cbbc132a5a00f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "Thank you for sharing that you want to explore culture and nature in the UK! That’s a fantastic combination. To refine your trip plan further, could you please provide a bit more detail:\n\n- How many days do you plan to spend in the UK?\n- Do you have any preferred cities or regions in mind? (For culture, cities like London, Edinburgh, York are great; for nature, places like the Lake District, Scottish Highlands, or the Cotswolds are stunning.)\n- What is your budget range for accommodations and activities? (Economy, mid-range, or luxury)\n- Are you traveling solo or with others?\n- Any special preferences for accommodation or transport?\n\nWith this, I can start crafting a balanced itinerary covering cultural sites and beautiful natural spots.",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "I am plannig for 5 days trip  in October month"
-      }
-    ]
-  },
-  {
-    "id": "msg_68b56829c8b481a08e1d01052b1514c50f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "Wonderful! A 5-day trip in October to explore culture and nature in the UK sounds perfect. October can offer beautiful autumn scenery, especially in natural areas.\n\nTo help customize your itinerary, could you please also share:\n\n- Your budget level (economy, mid-range, luxury)?\n- Are you traveling alone or with company?\n- Any specific cities or regions you definitely want to include or avoid?\n- Accommodation preferences (hotel, guesthouse, B&B, etc.)?\n\nOnce I have these details, I can suggest an exciting cultural and nature-focused 5-day itinerary for your UK trip in October.",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "Havingmid-range budget , travelling with girlfriend"
-      }
-    ]
-  },
-  {
-    "id": "msg_68b56869736881a0b245506075a64eb40f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "Thank you for the additional details! A mid-range budget trip for two in October focused on culture and nature will allow for a comfortable and enriching experience.\n\nHere’s a preliminary suggestion for your 5-day UK itinerary combining culture and nature:\n\nDay 1: Arrival in London \n- Explore iconic cultural sites like the British Museum, Covent Garden, and a West End show in the evening.\n\nDay 2: London to the Cotswolds \n- Morning train or car to the Cotswolds.\n- Enjoy picturesque villages, rolling hills, and walking trails.\n\nDay 3: Cotswolds Nature & Culture \n- Explore charming towns like Bourton-on-the-Water and Stow-on-the-Wold.\n- Visit historic gardens or stately homes in the region.\n\nDay 4: Travel to Oxford or Bath \n- Visit Oxford for its historic university and museums or Bath for Roman baths and Georgian architecture.\n\nDay 5: Return to London & Departure \n- Option for a Thames River cruise or last-minute sightseeing and shopping before your flight.\n\nWould you like me to help with booking flights, accommodations, or local experiences for this itinerary? Or would you prefer adjustments or additions based on any other interests you have?",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "Yaah please find some  flights for me"
-      }
-    ]
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b56957388081a0a5cb433bf3ea82c50f274fee29645858",
-    "callId": "call_AG825Jfew3p4GHlgPtbTtAXb",
-    "name": "transfer_to_Flight_Search_Agent",
-    "status": "completed",
-    "arguments": "{}",
-    "providerData": {
-      "id": "fc_68b56957388081a0a5cb433bf3ea82c50f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "transfer_to_Flight_Search_Agent",
-    "callId": "call_AG825Jfew3p4GHlgPtbTtAXb",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"assistant\":\"Flight Search Agent\"}"
-    }
-  },
-  {
-    "id": "msg_68b56958d4c881a09a0fbe8f7bda973b0f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "To find the best flights for your 5-day mid-range trip to the UK with your girlfriend in October, could you please provide:\n\n1. Your departure city or airport\n2. Preferred travel dates (if flexible, sharing a range helps)\n3. Any airline preferences or alliances you like\n4. Any seat class preference (economy, premium economy, business)\n5. Maximum number of connections you’re comfortable with\n6. Preferred time of day for departure or return flights (morning, afternoon, evening)\n\nWith this info, I can search for the most suitable flight options for you.",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "My departure city delhi , i am flexible with dates"
-      }
-    ]
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b569995c7c81a09e36829cfe2999390f274fee29645858",
-    "callId": "call_2FA0y44JUoRIN2p7rUr5azPG",
-    "name": "transfer_to_Flight_Search_Agent",
-    "status": "completed",
-    "arguments": "{}",
-    "providerData": {
-      "id": "fc_68b569995c7c81a09e36829cfe2999390f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "transfer_to_Flight_Search_Agent",
-    "callId": "call_2FA0y44JUoRIN2p7rUr5azPG",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"assistant\":\"Flight Search Agent\"}"
-    }
-  },
-  {
-    "id": "msg_68b5699a486881a0947ed905e4de83a10f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "Thanks for sharing your departure city as Delhi and being flexible with dates. To narrow down the flight options, could you please specify:\n\n- Preferred month or approximate dates of travel in October (e.g., early October, mid-October)?\n- Preferred class of service (economy, premium economy, business)?\n- Maximum stops you're comfortable with (direct or up to 1 stop)?\n- Any preference for airlines or alliance memberships you want to consider?\n\nThis will help me find the best and most convenient flights for your trip to the UK.",
-        "annotations": [],
-        "logprobs": []
-      }
-    ],
-    "status": "completed",
-    "providerData": {}
-  },
-  {
-    "type": "message",
-    "role": "user",
-    "content": [
-      {
-        "type": "input_text",
-        "text": "mid of october , no other preference please suggest from your side"
-      }
-    ]
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b569d76d0481a09c4cee8f7b7cca6f0f274fee29645858",
-    "callId": "call_ySb0YH1NBvK7qwOLodqyINGH",
-    "name": "transfer_to_Flight_Search_Agent",
-    "status": "completed",
-    "arguments": "{}",
-    "providerData": {
-      "id": "fc_68b569d76d0481a09c4cee8f7b7cca6f0f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "transfer_to_Flight_Search_Agent",
-    "callId": "call_ySb0YH1NBvK7qwOLodqyINGH",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"assistant\":\"Flight Search Agent\"}"
-    }
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b569d9972881a0b92320cdbd8fa94e0f274fee29645858",
-    "callId": "call_b40hXhIVzOWr0ahKMP78mnO6",
-    "name": "search_flights",
-    "status": "completed",
-    "arguments": "{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-14\",\"ret\":\"2024-10-19\",\"adults\":2}",
-    "providerData": {
-      "id": "fc_68b569d9972881a0b92320cdbd8fa94e0f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b569da281481a09f68d6f246978d860f274fee29645858",
-    "callId": "call_nikHBCgukDh7bwIz4K7lc8le",
-    "name": "search_flights",
-    "status": "completed",
-    "arguments": "{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-15\",\"ret\":\"2024-10-20\",\"adults\":2}",
-    "providerData": {
-      "id": "fc_68b569da281481a09f68d6f246978d860f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call",
-    "id": "fc_68b569daba6881a0b1a562e7673cf4b50f274fee29645858",
-    "callId": "call_Pb28BL9eDKpTZmOIquyn0h4P",
-    "name": "search_flights",
-    "status": "completed",
-    "arguments": "{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-16\",\"ret\":\"2024-10-21\",\"adults\":2}",
-    "providerData": {
-      "id": "fc_68b569daba6881a0b1a562e7673cf4b50f274fee29645858",
-      "type": "function_call"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "search_flights",
-    "callId": "call_b40hXhIVzOWr0ahKMP78mnO6",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"currency\":\"INR\",\"search\":{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-14\",\"ret\":\"2024-10-19\",\"adults\":2},\"results\":[{\"id\":\"AF225\",\"carrier\":\"Air France\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-14T09:25+05:30\",\"arrive\":\"2024-10-14T18:45+01:00\",\"stops\":1,\"duration\":\"12h 50m\",\"fare\":58900},{\"id\":\"LH761\",\"carrier\":\"Lufthansa\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-14T02:50+05:30\",\"arrive\":\"2024-10-14T12:35+01:00\",\"stops\":1,\"duration\":\"12h 15m\",\"fare\":61250}],\"note\":\"Static demo — replace with real API later.\"}"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "search_flights",
-    "callId": "call_nikHBCgukDh7bwIz4K7lc8le",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"currency\":\"INR\",\"search\":{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-15\",\"ret\":\"2024-10-20\",\"adults\":2},\"results\":[{\"id\":\"AF225\",\"carrier\":\"Air France\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-15T09:25+05:30\",\"arrive\":\"2024-10-15T18:45+01:00\",\"stops\":1,\"duration\":\"12h 50m\",\"fare\":58900},{\"id\":\"LH761\",\"carrier\":\"Lufthansa\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-15T02:50+05:30\",\"arrive\":\"2024-10-15T12:35+01:00\",\"stops\":1,\"duration\":\"12h 15m\",\"fare\":61250}],\"note\":\"Static demo — replace with real API later.\"}"
-    }
-  },
-  {
-    "type": "function_call_result",
-    "name": "search_flights",
-    "callId": "call_Pb28BL9eDKpTZmOIquyn0h4P",
-    "status": "completed",
-    "output": {
-      "type": "text",
-      "text": "{\"currency\":\"INR\",\"search\":{\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-16\",\"ret\":\"2024-10-21\",\"adults\":2},\"results\":[{\"id\":\"AF225\",\"carrier\":\"Air France\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-16T09:25+05:30\",\"arrive\":\"2024-10-16T18:45+01:00\",\"stops\":1,\"duration\":\"12h 50m\",\"fare\":58900},{\"id\":\"LH761\",\"carrier\":\"Lufthansa\",\"from\":\"DEL\",\"to\":\"LON\",\"depart\":\"2024-10-16T02:50+05:30\",\"arrive\":\"2024-10-16T12:35+01:00\",\"stops\":1,\"duration\":\"12h 15m\",\"fare\":61250}],\"note\":\"Static demo — replace with real API later.\"}"
-    }
-  },
-  {
-    "id": "msg_68b569dd055881a0b404c5961fdeb0ad0f274fee29645858",
-    "type": "message",
-    "role": "assistant",
-    "content": [
-      {
-        "type": "output_text",
-        "text": "For your mid-October UK trip from Delhi for two, here are some flight options I found:\n\n1. Departure on October 14, Return on October 19:\n   - Air France, 1 stop, duration 12h 50m, fare approx. ₹58,900 per person\n   - Lufthansa, 1 stop, duration 12h 15m, fare approx. ₹61,250 per person\n\n2. Departure on October 15, Return on October 20:\n   - Air France, 1 stop, duration 12h 50m, fare approx. ₹58,900 per person\n   - Lufthansa, 1 stop, duration 12h 15m, fare approx. ₹61,250 per person\n\n3. Departure on October 16, Return on October 21:\n   - Air France, 1 stop, duration 12h 50m, fare approx. ₹58,900 per person\n   - Lufthansa, 1 stop, duration 12h 15m, fare approx. ₹61,250 per person\n\nThese options offer a good balance of duration and price with just one stop. Lufthansa flights are slightly faster but a bit more expensive. Air France is a bit cheaper and has similar quality service.\n\nWould you like help booking one of these flights or need more alternate options? Also, I can assist with accommodations or local transfers if needed.",
+        "text": "I am here to assist with travel-related topics. If you have any travel questions or need help planning a trip, just let me know!",
         "annotations": [],
         "logprobs": []
       }
