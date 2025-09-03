@@ -22,6 +22,7 @@ import {
 } from '@openai/agents';
 import { z } from 'zod';
 import { DestinationInfoSchema } from '../types/types';
+import unifiedTravelGuardrail from './gaurdrail';
 /* ------------------------------ Guardrail Agents & Implementation ------------------------------ */
 
 // Define validation output schema
@@ -332,7 +333,7 @@ export const gatewayAgent  = Agent.create({
   model: 'gpt-4.1-mini',
   instructions: `${RECOMMENDED_PROMPT_PREFIX}\n\n${AGENT_PROMPTS.ORCHESTRATOR}`,
   handoffs: [tripPlannerAgent, flightSearchAgent, hotelSearchAgent,localExpert,itineraryOptimizer],
-  inputGuardrails: [travelSafetyGuardrailNew],
+  inputGuardrails: [unifiedTravelGuardrail],
 });
 
 /* ------------------------------ Stateful CLI ------------------------ */
