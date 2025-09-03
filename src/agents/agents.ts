@@ -134,37 +134,7 @@ User: "tell me a joke"
 `
 });
 // Input guardrail implementation
-const travelSafetyGuardrail: InputGuardrail = {
-  name: 'Travel Safety Input Guardrail',
-  execute: async ({ input, context }:any) => {
-    // Run validation agent
-    const result = await run(validationAgent, input, { context });
-    const validation = result.finalOutput;
-    // console.log('Guardrail validation:', validation);
-    // Log validation result for monitoring
 
-    if (context?.guardrailLog) {
-      context.guardrailLog.push({
-        timestamp: new Date().toISOString(),
-        input: typeof input === 'string' ? input : JSON.stringify(input),
-        validation
-      });
-    }
-    
-    // Determine if tripwire should be triggered
-    const shouldBlock = validation?.severity === 'block' || 
-                       !validation?.isValid ||
-                       validation?.category === 'harmful' ||
-                       validation?.category === 'injection-attempt' || 
-                       validation?.category === 'out-of-domain'
-                       ;
-    
-    return {
-      outputInfo: validation,
-      tripwireTriggered: shouldBlock
-    };
-  }
-};
 export const travelSafetyGuardrailNew: InputGuardrail = {
   name: "Travel Safety Input Guardrail (Safety-Only)",
   execute: async ({ input, context }: any) => {
@@ -196,6 +166,38 @@ export const travelSafetyGuardrailNew: InputGuardrail = {
   }
 };
 
+
+const travelSafetyGuardrail: InputGuardrail = {
+  name: 'Travel Safety Input Guardrail',
+  execute: async ({ input, context }:any) => {
+    // Run validation agent
+    const result = await run(validationAgent, input, { context });
+    const validation = result.finalOutput;
+    // console.log('Guardrail validation:', validation);
+    // Log validation result for monitoring
+
+    if (context?.guardrailLog) {
+      context.guardrailLog.push({
+        timestamp: new Date().toISOString(),
+        input: typeof input === 'string' ? input : JSON.stringify(input),
+        validation
+      });
+    }
+    
+    // Determine if tripwire should be triggered
+    const shouldBlock = validation?.severity === 'block' || 
+                       !validation?.isValid ||
+                       validation?.category === 'harmful' ||
+                       validation?.category === 'injection-attempt' || 
+                       validation?.category === 'out-of-domain'
+                       ;
+    
+    return {
+      outputInfo: validation,
+      tripwireTriggered: shouldBlock
+    };
+  }
+};
 // Output guardrail for final responses
 const travelResponseGuardrail: OutputGuardrail = {
   name: 'Travel Response Output Guardrail',
@@ -287,35 +289,7 @@ const searchCarsTool = tool({
   });
 /* ------------------------------ Agents ----------------------------- */
 
-// Trip Planner with hosted web search precheck + day-wise itinerary (5-day fallback)
-// const tripPlannerAgent = new Agent({
-//   name: 'Trip Planner Agent',
-//   model: 'gpt-4.1-mini',
-//   tools: [
-//     // Use hosted web search to gather: weather snapshot, travel advisory, political/unrest signals.
-//     webSearchTool()
-//   ],
-//   instructions: `
-// You are a concise trip-planning assistant.
 
-// PHASE 1 — City choice:
-// - If the user gives only a region (e.g., "east part of India"), do NOT guess one city.
-//   Suggest 4–6 specific cities with a one-line "why" each (e.g., Kolkata — heritage & food; Darjeeling — views & tea estates; Gangtok — monasteries & mountain drives; Puri — beach & Jagannath Temple; Shillong — waterfalls & cafes). Then stop.
-
-// PHASE 2 — Precheck + Itinerary:
-// - Once a specific city is known, do a quick "Precheck" using the web search tool for:
-//   1) Weather snapshot/forecast window around the user's dates (or inferred dates),
-//   2) Travel advisory/safety note,
-//   3) Recent political or civic unrest (strikes, protests) if any.
-//   Cite 1–2 links briefly (titles or domains are fine).
-// - If dates are vague (e.g., "next month", "this weekend"), you MAY infer a reasonable date window and state assumptions in one line.
-//   * If user didn't specify a day count, DEFAULT to a **5-day** trip.
-// - After the precheck, produce a short **day-wise plan**:
-//   "Day 1 … Day N" with 1–2 bullets per day (morning/afternoon/evening optional).
-// - Keep it brief and readable (no strict JSON needed for this demo).
-// - Do NOT book or call flight/car tools here. If they ask for flights or cars, the gateway will route to the right agent.
-// `
-// });
 
 // Flight Search Agent — requires from/to, date fallback: +1 month, 5-day return
 const flightSearchAgent = new Agent({
@@ -325,13 +299,7 @@ const flightSearchAgent = new Agent({
   instructions: AGENT_PROMPTS.FLIGHT_SPECIALIST
 });
 
-// Car Search Agent — unchanged (kept simple)
-// const carSearchAgent = new Agent({
-//   name: 'Car Search Agent',
-//   model: 'gpt-4.1-mini',
-//   tools: [searchCarsTool],
-//   instructions: AGENT_PROMPTS.
-// });
+
 
 const hotelSearchAgent = new Agent({
   name: 'Car Search Agent',
