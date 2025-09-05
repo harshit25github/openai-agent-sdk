@@ -8,9 +8,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/agents/agents.ts",
-    "stream": "ts-node src/agents/api.ts"
+    
+    "start": "ts-node src/agents/mem.ts",
+    "stream": "ts-node src/agents/api.ts",
+    "test" : "ts-node src/agents/redis.ts"
   },
   "dependencies": {
     "@openai/agents": "^0.0.17",
@@ -21,6 +22,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^5.1.0",
+    "mem0ai": "^2.1.38",
     "openai": "^4.20.1",
     "readline-sync": "^1.4.10"
   },
