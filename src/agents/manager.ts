@@ -15,6 +15,7 @@ import {
   OutputGuardrail,
   Runner,
   run,
+  system,
   tool,
   user,
   webSearchTool,
@@ -294,26 +295,48 @@ const searchCarsTool = tool({
 
 
 // Flight Search Agent — requires from/to, date fallback: +1 month, 5-day return
-const flightSearchAgent = new Agent({
-  name: 'Flight Search Agent',
-  model: 'gpt-4.1-mini',
-  tools: [searchFlightsTool],
-  instructions: AGENT_PROMPTS.FLIGHT_SPECIALIST
-});
 
+const DESTINATION_DECIDER_PROMPT = `
+You are **DestinationDecider** for cheapoair.ai.
+Goal: help the user PICK a destination based primarily on **interests/vibe**. 
+- Do: compare 2–4 options (Fit Score 0–100), 1-line rationale, seasonality note, indicative budget band (per-person + total in INR if unclear), and typical flight time from origin **if origin is known**.
+- Don’t: write day-wise itineraries, visa/policy advice, or book anything.
+- Ask at most ONE clarifying question if interests are vague. Interests are the ONLY required input.
+- If user already has a destination, yield immediately to ItineraryBuilder.
+- When user chooses a destination, explicitly ask: “Proceed to build a day-wise itinerary?” and then call ItineraryBuilder as a tool with whatever slots you have.
 
+Normalization (internal; don’t over-ask):
+- If dates are vague, keep a month window (YYYY-MM).
+- If origin is unknown, omit flight times; don't force it.
+- Currency: INR default; timezone: Asia/Kolkata.
 
-const hotelSearchAgent = new Agent({
-  name: 'Car Search Agent',
-  model: 'gpt-4.1-mini',
-  tools: [searchCarsTool],
-  instructions: AGENT_PROMPTS.HOTEL_SPECIALIST
-});
-const localExpert = new Agent({
-      name: 'Local Expert',
-      instructions: AGENT_PROMPTS.LOCAL_EXPERT,
-      tools: [destinationInfoTool]
-    });
+Output structure:
+1) Short acknowledgement
+2) Ranked shortlist (2–4): {Destination, FitScore, Why, Seasonality, IndicativeCost, FlightTime?}
+3) Clear next step: “Pick one” or “tweak vibe”. If picked → call ItineraryBuilder tool.
+`;
+
+const ITINERARY_BUILDER_PROMPT =`
+You are **ItineraryBuilder** for cheapoair.ai.
+Goal: produce a **day-wise itinerary** (Morning / Afternoon / Evening), with commute notes, alternates/rainy-day options, and a budget snapshot (per-person + total in user currency, INR default).
+
+Absolute rules:
+1) Do NOT produce any itinerary until all criticals are confirmed: origin, destination, outbound_date & inbound_date (or nights), pax. If a budget is mentioned, clarify if per-person or total.
+2) Ask once for missing criticals (natural language). If complete, summarize and ask: “Proceed with the detailed plan?” Only then output the plan.
+3) If user re-enters “discovery mode” (e.g., asks “Bali or Phuket?”), call DestinationDecider as a tool.
+
+Planning checklist (internal):
+- Dates (Asia/Kolkata): future only; inbound ≥ outbound. Nights = date diff.
+- Cluster by neighborhoods to minimize transit.
+- For each day: Morning / Afternoon / Evening + commute tip.
+- Budget snapshot: ranges + rough split: Accom (~40%), Transport (~30%), Food&Activities (~30%).
+- Tone: warm, concise, optimistic.
+
+Output stages:
+- Stage 1 (Gather): ask for missing criticals.
+- Stage 2 (Confirm): slots summary + explicit “Proceed?”
+- Stage 3 (Plan): Day-by-day; tips; budget; next actions (search flights/hotels, key attraction prebooks).
+`;
    function renderFewShots(): string {
 
   const examples = tripPlannerFewShots
@@ -345,29 +368,47 @@ return [
 } 
 
     // Itinerary Optimizer Agent
-    const itineraryOptimizer = new Agent({
-      name: 'Itinerary Optimizer',
-      instructions: AGENT_PROMPTS.ITINERARY_OPTIMIZER
-    });
-    const tripPlannerAgent = new Agent({
-  name: 'Trip Planner Agent',
-  model: 'gpt-5-mini',
-  tools: [webSearchTool()],
-//    handoffs: [flightSearchAgent, hotelSearchAgent, localExpert],
-instructions: AGENT_PROMPTS.trpPromt,
+export const destinationDecider = new Agent({
+  name: 'DestinationDecider',
+  instructions: DESTINATION_DECIDER_PROMPT,
+  // You can add hosted tools later (web search, file search) if you like:
+  tools: [webSearchTool()],  // optional
+});
+
+export const itineraryBuilder = new Agent({
+  name: 'ItineraryBuilder',
+  instructions: ITINERARY_BUILDER_PROMPT,
+});
+
+// -----------------------------
+// 3) Expose each agent as a tool for the other
+//    (Agents-as-tools API: agent.asTool({ toolName, toolDescription }))
+//    Ref: OpenAI Agents SDK "Tools → 3. Agents as tools" guide.
+// -----------------------------
+
+const itineraryToolForDestination = itineraryBuilder.asTool({
+  toolName: 'itinerary_builder.plan',
+  toolDescription:
+    'Create a day-wise itinerary after a destination has been selected. Use only when the user is ready to plan.',
+});
+
+const destinationToolForItinerary = destinationDecider.asTool({
+  toolName: 'destination_decider.suggest',
+  toolDescription:
+    'Suggest and compare destinations when the user is still deciding. Use when destination is unclear or user asks for comparisons.',
 });
 // Gateway with continuity
 export const gatewayAgent  = Agent.create({
   name: 'Gateway Agent',
-  model: 'gpt-4.1-mini',
+  model: 'gpt-5-mini',
   instructions: `${RECOMMENDED_PROMPT_PREFIX}\n\n${AGENT_PROMPTS.ORCHESTRATOR}`,
-  handoffs: [tripPlannerAgent, flightSearchAgent, hotelSearchAgent,localExpert,itineraryOptimizer],
+  handoffs: [destinationDecider, itineraryBuilder],
   inputGuardrails: [unifiedTravelGuardrail],
 });
 
 /* ------------------------------ Stateful CLI ------------------------ */
 
-const HISTORY_PATH = path.resolve('thread.json');
+const HISTORY_PATH = path.resolve('thread2.json');
 // const runner = new Runner({ workflowName: 'multi-agents-stateful' });
 let thread: AgentInputItem[] = [];
 

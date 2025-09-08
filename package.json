@@ -9,7 +9,7 @@
   },
   "scripts": {
     
-    "start": "ts-node src/agents/mem.ts",
+    "start": "ts-node src/agents/agents.ts",
     "stream": "ts-node src/agents/api.ts",
     "test" : "ts-node src/agents/redis.ts"
   },
