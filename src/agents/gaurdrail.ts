@@ -210,13 +210,13 @@ export const unifiedTravelGuardrail: InputGuardrail = {
       const res = await run(unifiedTravelGuardrailAgent, text, { context });
       const guardrailResult = res.finalOutput;
       
-      console.log('Unified Guardrail Analysis:', {
-        decision: guardrailResult?.decision,
-        category: guardrailResult?.category,
-        hasCompetitor: guardrailResult?.hasCompetitor,
-        actionRequired: guardrailResult?.actionRequired,
-        missingSlots: guardrailResult?.missingSlots
-      });
+      // console.log('Unified Guardrail Analysis:', {
+      //   decision: guardrailResult?.decision,
+      //   category: guardrailResult?.category,
+      //   hasCompetitor: guardrailResult?.hasCompetitor,
+      //   actionRequired: guardrailResult?.actionRequired,
+      //   missingSlots: guardrailResult?.missingSlots
+      // });
 
       // Only block for actual safety issues
       const shouldBlock = guardrailResult?.decision === "block";
