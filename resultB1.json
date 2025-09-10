@@ -1,0 +1,363 @@
+{
+  "state": {
+    "$schemaVersion": "1.0",
+    "currentTurn": 1,
+    "currentAgent": {
+      "name": "Gateway (Triage) Agent"
+    },
+    "originalInput": "I’m torn between Tokyo or Kyoto for 5 days. Which should I pick and why?",
+    "modelResponses": [
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 365,
+          "outputTokens": 344,
+          "totalTokens": 709
+        },
+        "output": [
+          {
+            "providerData": {},
+            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+              }
+            ]
+          }
+        ],
+        "responseId": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
+        "providerData": {
+          "id": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
+          "object": "response",
+          "created_at": 1757422342,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Handoff to the Destination Agent agent to handle the request. ",
+              "name": "transfer_to_Destination_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Itinerary Agent agent to handle the request. ",
+              "name": "transfer_to_Itinerary_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Booking Agent agent to handle the request. ",
+              "name": "transfer_to_Booking_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 365,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 344,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 709
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+        }
+      }
+    ],
+    "context": {
+      "usage": {
+        "requests": 1,
+        "inputTokens": 365,
+        "outputTokens": 344,
+        "totalTokens": 709
+      },
+      "approvals": {},
+      "context": {
+        "pax": 2
+      }
+    },
+    "toolUseTracker": {
+      "Gateway (Triage) Agent": []
+    },
+    "maxTurns": 10,
+    "currentAgentSpan": {
+      "object": "trace.span",
+      "id": "span_e07486ee8f9f40008de53649",
+      "trace_id": "trace_083aca31cf5042ad8fcbb3ae58bc7b0a",
+      "parent_id": null,
+      "started_at": "2025-09-09T12:52:22.165Z",
+      "ended_at": "2025-09-09T12:52:29.417Z",
+      "error": null,
+      "span_data": {
+        "type": "agent",
+        "name": "Gateway (Triage) Agent",
+        "handoffs": [
+          "Destination Agent",
+          "Itinerary Agent",
+          "Booking Agent"
+        ],
+        "output_type": "text",
+        "tools": []
+      }
+    },
+    "noActiveAgentRun": false,
+    "inputGuardrailResults": [],
+    "outputGuardrailResults": [],
+    "currentStep": {
+      "type": "next_step_final_output",
+      "output": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+    },
+    "lastModelResponse": {
+      "usage": {
+        "requests": 1,
+        "inputTokens": 365,
+        "outputTokens": 344,
+        "totalTokens": 709
+      },
+      "output": [
+        {
+          "providerData": {},
+          "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+            }
+          ]
+        }
+      ],
+      "responseId": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
+      "providerData": {
+        "id": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
+        "object": "response",
+        "created_at": 1757422342,
+        "status": "completed",
+        "background": false,
+        "error": null,
+        "incomplete_details": null,
+        "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
+        "max_output_tokens": null,
+        "max_tool_calls": null,
+        "model": "gpt-4.1-2025-04-14",
+        "output": [
+          {
+            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+            "type": "message",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+              }
+            ],
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": true,
+        "temperature": 1,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "description": "Handoff to the Destination Agent agent to handle the request. ",
+            "name": "transfer_to_Destination_Agent",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
+            "type": "function",
+            "description": "Handoff to the Itinerary Agent agent to handle the request. ",
+            "name": "transfer_to_Itinerary_Agent",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
+            "type": "function",
+            "description": "Handoff to the Booking Agent agent to handle the request. ",
+            "name": "transfer_to_Booking_Agent",
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 365,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 344,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 709
+        },
+        "user": null,
+        "metadata": {},
+        "output_text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+      }
+    },
+    "generatedItems": [
+      {
+        "type": "message_output_item",
+        "rawItem": {
+          "providerData": {},
+          "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+            }
+          ]
+        },
+        "agent": {
+          "name": "Gateway (Triage) Agent"
+        }
+      }
+    ],
+    "lastProcessedResponse": {
+      "newItems": [
+        {
+          "type": "message_output_item",
+          "rawItem": {
+            "providerData": {},
+            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
+              }
+            ]
+          },
+          "agent": {
+            "name": "Gateway (Triage) Agent"
+          }
+        }
+      ],
+      "toolsUsed": [],
+      "handoffs": [],
+      "functions": [],
+      "computerActions": [],
+      "mcpApprovalRequests": []
+    },
+    "trace": {
+      "object": "trace",
+      "id": "trace_083aca31cf5042ad8fcbb3ae58bc7b0a",
+      "workflow_name": "Agent workflow",
+      "group_id": null,
+      "metadata": {}
+    }
+  }
+}

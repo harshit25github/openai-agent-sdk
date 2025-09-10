@@ -1,0 +1,620 @@
+{
+  "state": {
+    "$schemaVersion": "1.0",
+    "currentTurn": 3,
+    "currentAgent": {
+      "name": "Itinerary Agent"
+    },
+    "originalInput": "Great, please create a detailed 5-day itinerary for the chosen place.",
+    "modelResponses": [
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 361,
+          "outputTokens": 16,
+          "totalTokens": 377
+        },
+        "output": [
+          {
+            "providerData": {
+              "id": "fc_68c0230e376c819d89c53a08c811554504192ee2c3f154ca",
+              "type": "function_call"
+            },
+            "id": "fc_68c0230e376c819d89c53a08c811554504192ee2c3f154ca",
+            "type": "function_call",
+            "callId": "call_SvJB9YSg497kb9CFBdhElpSE",
+            "name": "transfer_to_Itinerary_Agent",
+            "status": "completed",
+            "arguments": "{}"
+          }
+        ],
+        "responseId": "resp_68c0230da07c819d8aeba5def20e414f04192ee2c3f154ca",
+        "providerData": {
+          "id": "resp_68c0230da07c819d8aeba5def20e414f04192ee2c3f154ca",
+          "object": "response",
+          "created_at": 1757422349,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "fc_68c0230e376c819d89c53a08c811554504192ee2c3f154ca",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_SvJB9YSg497kb9CFBdhElpSE",
+              "name": "transfer_to_Itinerary_Agent"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Handoff to the Destination Agent agent to handle the request. ",
+              "name": "transfer_to_Destination_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Itinerary Agent agent to handle the request. ",
+              "name": "transfer_to_Itinerary_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Booking Agent agent to handle the request. ",
+              "name": "transfer_to_Booking_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 361,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 16,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 377
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": ""
+        }
+      },
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 194,
+          "outputTokens": 16,
+          "totalTokens": 210
+        },
+        "output": [
+          {
+            "providerData": {
+              "id": "fc_68c0230f5cd4819d81f32d65aed21f4b04192ee2c3f154ca",
+              "type": "function_call"
+            },
+            "id": "fc_68c0230f5cd4819d81f32d65aed21f4b04192ee2c3f154ca",
+            "type": "function_call",
+            "callId": "call_MIcUdUlqzk2060gmZQ5Ifgnl",
+            "name": "verify_destination",
+            "status": "completed",
+            "arguments": "{\"input\":\"chosen place\"}"
+          }
+        ],
+        "responseId": "resp_68c0230eb808819d872cd4c2770d06bd04192ee2c3f154ca",
+        "providerData": {
+          "id": "resp_68c0230eb808819d872cd4c2770d06bd04192ee2c3f154ca",
+          "object": "response",
+          "created_at": 1757422350,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "\nYou create a clear, day-wise itinerary (morning/afternoon/evening) tailored to pax & dates.\n\nIf the destination isn't clearly verified (visa/safety unknown) OR the user jumped straight to planning,\nFIRST call the tool 'verify_destination' with the user's intended place. Then plan.\n\nOutput format:\n- Brief confirmation line about destination checks.\n- Then a 3–5 day outline with time-of-day blocks.\n- Keep it concise and actionable.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "fc_68c0230f5cd4819d81f32d65aed21f4b04192ee2c3f154ca",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"input\":\"chosen place\"}",
+              "call_id": "call_MIcUdUlqzk2060gmZQ5Ifgnl",
+              "name": "verify_destination"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Validate/confirm destination and return safety/visa essentials before planning.",
+              "name": "verify_destination",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "input"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 194,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 16,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 210
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": ""
+        }
+      },
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 281,
+          "outputTokens": 67,
+          "totalTokens": 348
+        },
+        "output": [
+          {
+            "providerData": {},
+            "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+              }
+            ]
+          }
+        ],
+        "responseId": "resp_68c02312f168819d988cb7a13e5919e304192ee2c3f154ca",
+        "providerData": {
+          "id": "resp_68c02312f168819d988cb7a13e5919e304192ee2c3f154ca",
+          "object": "response",
+          "created_at": 1757422354,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "\nYou create a clear, day-wise itinerary (morning/afternoon/evening) tailored to pax & dates.\n\nIf the destination isn't clearly verified (visa/safety unknown) OR the user jumped straight to planning,\nFIRST call the tool 'verify_destination' with the user's intended place. Then plan.\n\nOutput format:\n- Brief confirmation line about destination checks.\n- Then a 3–5 day outline with time-of-day blocks.\n- Keep it concise and actionable.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Validate/confirm destination and return safety/visa essentials before planning.",
+              "name": "verify_destination",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "input"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 281,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 67,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 348
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+        }
+      }
+    ],
+    "context": {
+      "usage": {
+        "requests": 3,
+        "inputTokens": 836,
+        "outputTokens": 99,
+        "totalTokens": 935
+      },
+      "approvals": {},
+      "context": {
+        "pax": 2
+      }
+    },
+    "toolUseTracker": {
+      "Gateway (Triage) Agent": [
+        "transfer_to_Itinerary_Agent"
+      ],
+      "Itinerary Agent": []
+    },
+    "maxTurns": 10,
+    "currentAgentSpan": {
+      "object": "trace.span",
+      "id": "span_0208d3a70528495fa1ad965e",
+      "trace_id": "trace_d90dd111ce2c41e281de5e4681005f4b",
+      "parent_id": null,
+      "started_at": "2025-09-09T12:52:30.511Z",
+      "ended_at": "2025-09-09T12:52:36.843Z",
+      "error": null,
+      "span_data": {
+        "type": "agent",
+        "name": "Itinerary Agent",
+        "handoffs": [],
+        "output_type": "text",
+        "tools": [
+          "verify_destination"
+        ]
+      }
+    },
+    "noActiveAgentRun": false,
+    "inputGuardrailResults": [],
+    "outputGuardrailResults": [],
+    "currentStep": {
+      "type": "next_step_final_output",
+      "output": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+    },
+    "lastModelResponse": {
+      "usage": {
+        "requests": 1,
+        "inputTokens": 281,
+        "outputTokens": 67,
+        "totalTokens": 348
+      },
+      "output": [
+        {
+          "providerData": {},
+          "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+            }
+          ]
+        }
+      ],
+      "responseId": "resp_68c02312f168819d988cb7a13e5919e304192ee2c3f154ca",
+      "providerData": {
+        "id": "resp_68c02312f168819d988cb7a13e5919e304192ee2c3f154ca",
+        "object": "response",
+        "created_at": 1757422354,
+        "status": "completed",
+        "background": false,
+        "error": null,
+        "incomplete_details": null,
+        "instructions": "\nYou create a clear, day-wise itinerary (morning/afternoon/evening) tailored to pax & dates.\n\nIf the destination isn't clearly verified (visa/safety unknown) OR the user jumped straight to planning,\nFIRST call the tool 'verify_destination' with the user's intended place. Then plan.\n\nOutput format:\n- Brief confirmation line about destination checks.\n- Then a 3–5 day outline with time-of-day blocks.\n- Keep it concise and actionable.\n",
+        "max_output_tokens": null,
+        "max_tool_calls": null,
+        "model": "gpt-4.1-2025-04-14",
+        "output": [
+          {
+            "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+            "type": "message",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+              }
+            ],
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": true,
+        "temperature": 1,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tool_choice": "auto",
+        "tools": [
+          {
+            "type": "function",
+            "description": "Validate/confirm destination and return safety/visa essentials before planning.",
+            "name": "verify_destination",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          }
+        ],
+        "top_logprobs": 0,
+        "top_p": 1,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 281,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 67,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 348
+        },
+        "user": null,
+        "metadata": {},
+        "output_text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+      }
+    },
+    "generatedItems": [
+      {
+        "type": "handoff_call_item",
+        "rawItem": {
+          "providerData": {
+            "id": "fc_68c0230e376c819d89c53a08c811554504192ee2c3f154ca",
+            "type": "function_call"
+          },
+          "id": "fc_68c0230e376c819d89c53a08c811554504192ee2c3f154ca",
+          "type": "function_call",
+          "callId": "call_SvJB9YSg497kb9CFBdhElpSE",
+          "name": "transfer_to_Itinerary_Agent",
+          "status": "completed",
+          "arguments": "{}"
+        },
+        "agent": {
+          "name": "Gateway (Triage) Agent"
+        }
+      },
+      {
+        "type": "handoff_output_item",
+        "rawItem": {
+          "type": "function_call_result",
+          "name": "transfer_to_Itinerary_Agent",
+          "callId": "call_SvJB9YSg497kb9CFBdhElpSE",
+          "status": "completed",
+          "output": {
+            "type": "text",
+            "text": "{\"assistant\":\"Itinerary Agent\"}"
+          }
+        },
+        "sourceAgent": {
+          "name": "Gateway (Triage) Agent"
+        },
+        "targetAgent": {
+          "name": "Itinerary Agent"
+        }
+      },
+      {
+        "type": "tool_call_item",
+        "rawItem": {
+          "providerData": {
+            "id": "fc_68c0230f5cd4819d81f32d65aed21f4b04192ee2c3f154ca",
+            "type": "function_call"
+          },
+          "id": "fc_68c0230f5cd4819d81f32d65aed21f4b04192ee2c3f154ca",
+          "type": "function_call",
+          "callId": "call_MIcUdUlqzk2060gmZQ5Ifgnl",
+          "name": "verify_destination",
+          "status": "completed",
+          "arguments": "{\"input\":\"chosen place\"}"
+        },
+        "agent": {
+          "name": "Itinerary Agent"
+        }
+      },
+      {
+        "type": "tool_call_output_item",
+        "rawItem": {
+          "type": "function_call_result",
+          "name": "verify_destination",
+          "callId": "call_MIcUdUlqzk2060gmZQ5Ifgnl",
+          "status": "completed",
+          "output": {
+            "type": "text",
+            "text": "It looks like you entered “chosen place,” but you didn’t specify a destination. Could you please confirm the city or country you are considering? If you’re deciding between a few locations, just list them and I’ll help you finalize the best option with visa and safety insights.\n\nLet me know your chosen destination!"
+          }
+        },
+        "agent": {
+          "name": "Itinerary Agent"
+        },
+        "output": "It looks like you entered “chosen place,” but you didn’t specify a destination. Could you please confirm the city or country you are considering? If you’re deciding between a few locations, just list them and I’ll help you finalize the best option with visa and safety insights.\n\nLet me know your chosen destination!"
+      },
+      {
+        "type": "message_output_item",
+        "rawItem": {
+          "providerData": {},
+          "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+            }
+          ]
+        },
+        "agent": {
+          "name": "Itinerary Agent"
+        }
+      }
+    ],
+    "lastProcessedResponse": {
+      "newItems": [
+        {
+          "type": "message_output_item",
+          "rawItem": {
+            "providerData": {},
+            "id": "msg_68c023136ca0819d8d9f74dcbe2f510804192ee2c3f154ca",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "I need a bit more information before proceeding: you mentioned \"chosen place,\" but didn't specify a destination. To create a detailed itinerary—and check important travel details like visa and safety requirements—please tell me the city or country you’re interested in.\n\nOnce you confirm your destination, I’ll provide a tailored 5-day itinerary!"
+              }
+            ]
+          },
+          "agent": {
+            "name": "Itinerary Agent"
+          }
+        }
+      ],
+      "toolsUsed": [],
+      "handoffs": [],
+      "functions": [],
+      "computerActions": [],
+      "mcpApprovalRequests": []
+    },
+    "trace": {
+      "object": "trace",
+      "id": "trace_d90dd111ce2c41e281de5e4681005f4b",
+      "workflow_name": "Agent workflow",
+      "group_id": null,
+      "metadata": {}
+    }
+  }
+}

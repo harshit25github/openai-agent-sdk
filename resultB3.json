@@ -1,0 +1,444 @@
+{
+  "state": {
+    "$schemaVersion": "1.0",
+    "currentTurn": 2,
+    "currentAgent": {
+      "name": "Booking Agent"
+    },
+    "originalInput": "Looks good. Help me book this trip — flights + a mid-range hotel.",
+    "modelResponses": [
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 362,
+          "outputTokens": 15,
+          "totalTokens": 377
+        },
+        "output": [
+          {
+            "providerData": {
+              "id": "fc_68c02315b3dc81929594ff8e8e1a8a7807d4b845f6ec30c5",
+              "type": "function_call"
+            },
+            "id": "fc_68c02315b3dc81929594ff8e8e1a8a7807d4b845f6ec30c5",
+            "type": "function_call",
+            "callId": "call_aSUCzRCDOXNqZy8qmbHJbRcw",
+            "name": "transfer_to_Booking_Agent",
+            "status": "completed",
+            "arguments": "{}"
+          }
+        ],
+        "responseId": "resp_68c0231510c88192b7172ddf95c9b12707d4b845f6ec30c5",
+        "providerData": {
+          "id": "resp_68c0231510c88192b7172ddf95c9b12707d4b845f6ec30c5",
+          "object": "response",
+          "created_at": 1757422357,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "fc_68c02315b3dc81929594ff8e8e1a8a7807d4b845f6ec30c5",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_aSUCzRCDOXNqZy8qmbHJbRcw",
+              "name": "transfer_to_Booking_Agent"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Handoff to the Destination Agent agent to handle the request. ",
+              "name": "transfer_to_Destination_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Itinerary Agent agent to handle the request. ",
+              "name": "transfer_to_Itinerary_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Handoff to the Booking Agent agent to handle the request. ",
+              "name": "transfer_to_Booking_Agent",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 362,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 15,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 377
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": ""
+        }
+      },
+      {
+        "usage": {
+          "requests": 1,
+          "inputTokens": 104,
+          "outputTokens": 93,
+          "totalTokens": 197
+        },
+        "output": [
+          {
+            "providerData": {},
+            "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+              }
+            ]
+          }
+        ],
+        "responseId": "resp_68c0231752f08192a543be623defacaa07d4b845f6ec30c5",
+        "providerData": {
+          "id": "resp_68c0231752f08192a543be623defacaa07d4b845f6ec30c5",
+          "object": "response",
+          "created_at": 1757422359,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "\nYou assist in booking flights/hotels AFTER the itinerary is finalized.\nIf anything is missing (no destination, dates, or itinerary), ask for that first.\nProvide a simple checklist and a ready-to-book summary.\n",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-2025-04-14",
+          "output": [
+            {
+              "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 104,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 93,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 197
+          },
+          "user": null,
+          "metadata": {},
+          "output_text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+        }
+      }
+    ],
+    "context": {
+      "usage": {
+        "requests": 2,
+        "inputTokens": 466,
+        "outputTokens": 108,
+        "totalTokens": 574
+      },
+      "approvals": {},
+      "context": {
+        "pax": 2
+      }
+    },
+    "toolUseTracker": {
+      "Gateway (Triage) Agent": [
+        "transfer_to_Booking_Agent"
+      ],
+      "Booking Agent": []
+    },
+    "maxTurns": 10,
+    "currentAgentSpan": {
+      "object": "trace.span",
+      "id": "span_1217cf9a82cc4ce9b35ef5e6",
+      "trace_id": "trace_8bc41baa1f2c40e7af6bc9102a302afd",
+      "parent_id": null,
+      "started_at": "2025-09-09T12:52:38.621Z",
+      "ended_at": "2025-09-09T12:52:42.573Z",
+      "error": null,
+      "span_data": {
+        "type": "agent",
+        "name": "Booking Agent",
+        "handoffs": [],
+        "output_type": "text",
+        "tools": []
+      }
+    },
+    "noActiveAgentRun": false,
+    "inputGuardrailResults": [],
+    "outputGuardrailResults": [],
+    "currentStep": {
+      "type": "next_step_final_output",
+      "output": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+    },
+    "lastModelResponse": {
+      "usage": {
+        "requests": 1,
+        "inputTokens": 104,
+        "outputTokens": 93,
+        "totalTokens": 197
+      },
+      "output": [
+        {
+          "providerData": {},
+          "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+            }
+          ]
+        }
+      ],
+      "responseId": "resp_68c0231752f08192a543be623defacaa07d4b845f6ec30c5",
+      "providerData": {
+        "id": "resp_68c0231752f08192a543be623defacaa07d4b845f6ec30c5",
+        "object": "response",
+        "created_at": 1757422359,
+        "status": "completed",
+        "background": false,
+        "error": null,
+        "incomplete_details": null,
+        "instructions": "\nYou assist in booking flights/hotels AFTER the itinerary is finalized.\nIf anything is missing (no destination, dates, or itinerary), ask for that first.\nProvide a simple checklist and a ready-to-book summary.\n",
+        "max_output_tokens": null,
+        "max_tool_calls": null,
+        "model": "gpt-4.1-2025-04-14",
+        "output": [
+          {
+            "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+            "type": "message",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+              }
+            ],
+            "role": "assistant"
+          }
+        ],
+        "parallel_tool_calls": true,
+        "previous_response_id": null,
+        "prompt_cache_key": null,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "safety_identifier": null,
+        "service_tier": "default",
+        "store": true,
+        "temperature": 1,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tool_choice": "auto",
+        "tools": [],
+        "top_logprobs": 0,
+        "top_p": 1,
+        "truncation": "disabled",
+        "usage": {
+          "input_tokens": 104,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens": 93,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 197
+        },
+        "user": null,
+        "metadata": {},
+        "output_text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+      }
+    },
+    "generatedItems": [
+      {
+        "type": "handoff_call_item",
+        "rawItem": {
+          "providerData": {
+            "id": "fc_68c02315b3dc81929594ff8e8e1a8a7807d4b845f6ec30c5",
+            "type": "function_call"
+          },
+          "id": "fc_68c02315b3dc81929594ff8e8e1a8a7807d4b845f6ec30c5",
+          "type": "function_call",
+          "callId": "call_aSUCzRCDOXNqZy8qmbHJbRcw",
+          "name": "transfer_to_Booking_Agent",
+          "status": "completed",
+          "arguments": "{}"
+        },
+        "agent": {
+          "name": "Gateway (Triage) Agent"
+        }
+      },
+      {
+        "type": "handoff_output_item",
+        "rawItem": {
+          "type": "function_call_result",
+          "name": "transfer_to_Booking_Agent",
+          "callId": "call_aSUCzRCDOXNqZy8qmbHJbRcw",
+          "status": "completed",
+          "output": {
+            "type": "text",
+            "text": "{\"assistant\":\"Booking Agent\"}"
+          }
+        },
+        "sourceAgent": {
+          "name": "Gateway (Triage) Agent"
+        },
+        "targetAgent": {
+          "name": "Booking Agent"
+        }
+      },
+      {
+        "type": "message_output_item",
+        "rawItem": {
+          "providerData": {},
+          "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+          "type": "message",
+          "role": "assistant",
+          "status": "completed",
+          "content": [
+            {
+              "type": "output_text",
+              "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+            }
+          ]
+        },
+        "agent": {
+          "name": "Booking Agent"
+        }
+      }
+    ],
+    "lastProcessedResponse": {
+      "newItems": [
+        {
+          "type": "message_output_item",
+          "rawItem": {
+            "providerData": {},
+            "id": "msg_68c023182ec4819285a3982b16fa3a4a07d4b845f6ec30c5",
+            "type": "message",
+            "role": "assistant",
+            "status": "completed",
+            "content": [
+              {
+                "type": "output_text",
+                "text": "I noticed that your trip details (destination, travel dates, and specific itinerary) are missing.\n\nTo proceed, could you please provide:\n1. Destination city/country\n2. Departure city/airport\n3. Dates of travel (departure and return)\n4. Any specific hotel preferences (location, amenities, bed type, etc.)\n5. Number of travelers and room requirement\n\nOnce I have this information, I'll provide a checklist and ready-to-book summary!"
+              }
+            ]
+          },
+          "agent": {
+            "name": "Booking Agent"
+          }
+        }
+      ],
+      "toolsUsed": [],
+      "handoffs": [],
+      "functions": [],
+      "computerActions": [],
+      "mcpApprovalRequests": []
+    },
+    "trace": {
+      "object": "trace",
+      "id": "trace_8bc41baa1f2c40e7af6bc9102a302afd",
+      "workflow_name": "Agent workflow",
+      "group_id": null,
+      "metadata": {}
+    }
+  }
+}
