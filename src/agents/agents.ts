@@ -71,7 +71,7 @@ const flightSearchAgent = new Agent({
 const hotelSearchAgent = new Agent({
   name: 'Car Search Agent',
   model: 'gpt-4.1-mini',
-  tools: [searchCarsTool],
+  // tools: [searchCarsTool],
   instructions: AGENT_PROMPTS.HOTEL_SPECIALIST
 });
 

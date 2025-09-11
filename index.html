@@ -23,7 +23,7 @@
       const output = document.getElementById("output");
       output.textContent = ""; // clear old
 
-      const evtSource = new EventSource(`http://localhost:3000/travel?q=${encodeURIComponent(query)}`);
+      const evtSource = new EventSource(`http://localhost:3000/stream?q=${encodeURIComponent(query)}`);
 
       evtSource.onmessage = (e) => {
         if (e.data === "[DONE]") {

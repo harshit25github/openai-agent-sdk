@@ -1,38 +1,72 @@
+// server.ts
 import express from "express";
 import cors from "cors";
 import { run, user } from "@openai/agents";
-import { gatewayAgent } from "./agents"; // your Agent
-//@ts-nocheck
-//@ts-ignore
+import { gatewayAgent } from "./agents"; // your existing agent
+
 const app = express();
 app.use(cors());
 
-app.get("/travel", async (req, res) => {
+app.get("/stream", async (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
 
-  const query = String(req.query.q ?? "");
-  const stream = await run(gatewayAgent, [user(query)], { stream: true });
-const textStream = stream.toTextStream({ compatibleWithNodeStreams: true });
+  const q = String(req.query.q ?? "");
+  let full = "";
+  // Start a streamed run
+  const streamed = await run(gatewayAgent, [user(q)], { stream: true });
 
-// Stream text chunks to client as usual
-textStream.on("data", (chunk) => {
-  res.write(`data: ${chunk.toString()}\n\n`);
+  // This is an incremental text stream (fresh tokens only)
+  const textStream = streamed.toTextStream({ compatibleWithNodeStreams: true });
+
+    const send = (obj: unknown) => {
+    res.write(`data: ${JSON.stringify(obj)}\n\n`);
+  };
+
+  textStream.on("data", (chunk) => {
+    const piece = chunk.toString();
+    if (!piece) return;
+    full += piece;
+
+    // Mindtrip-style "in-progress" packet
+    send({
+      status: "in-progress",
+      data: [{ type: "text", text: piece }],
+    });
+  });
+
+  textStream.on("end", async () => {
+    // ensure agent run has fully settled (optional but nice)
+    try { await streamed.completed; } catch {}
+
+    // Mindtrip-style "done" packet with full body
+    send({
+      status: "done",
+      data: {
+        bot_message: {
+          body: full,
+        },
+      },
+    });
+
+    res.end();
+  });
+
+  textStream.on("error", (err) => {
+    send({
+      status: "error",
+      error: { message: String(err) },
+    });
+    res.end();
+  });
+
+  // Cleanup if client disconnects
+  req.on("close", () => {
+    try { (textStream as any).destroy?.(); } catch {}
+  });
 });
 
-textStream.on("end", async () => {
-  // Wait for the full agent run to complete and get structured output
-  const finalResult = await stream.completed; 
-  // finalResult should be an object matching TurnOutput schema: { text: "...", city: { ... } }
-
-  // Send the JSON object as a final SSE event (so the client can parse city info)
-  res.write(`data: ${JSON.stringify(finalResult)}\n\n`);
-  res.write("data: [DONE]\n\n");
-  res.end();
-});
-  
-
-});
-
-app.listen(3000, () => console.log("SSE on http://localhost:3000"));
+app.listen(3000, () =>
+  console.log("SSE ready at http://localhost:3000/stream")
+);
