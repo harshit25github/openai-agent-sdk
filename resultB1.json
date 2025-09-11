@@ -1,363 +1,270 @@
-{
-  "state": {
-    "$schemaVersion": "1.0",
-    "currentTurn": 1,
-    "currentAgent": {
-      "name": "Gateway (Triage) Agent"
-    },
-    "originalInput": "I’m torn between Tokyo or Kyoto for 5 days. Which should I pick and why?",
-    "modelResponses": [
-      {
-        "usage": {
-          "requests": 1,
-          "inputTokens": 365,
-          "outputTokens": 344,
-          "totalTokens": 709
-        },
-        "output": [
-          {
-            "providerData": {},
-            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-            "type": "message",
-            "role": "assistant",
-            "status": "completed",
-            "content": [
-              {
-                "type": "output_text",
-                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-              }
-            ]
-          }
-        ],
-        "responseId": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
-        "providerData": {
-          "id": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
-          "object": "response",
-          "created_at": 1757422342,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-4.1-2025-04-14",
-          "output": [
-            {
-              "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "output_text",
-                  "annotations": [],
-                  "logprobs": [],
-                  "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-                }
-              ],
-              "role": "assistant"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "reasoning": {
-            "effort": null,
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": true,
-          "temperature": 1,
-          "text": {
-            "format": {
-              "type": "text"
-            },
-            "verbosity": "medium"
-          },
-          "tool_choice": "auto",
-          "tools": [
-            {
-              "type": "function",
-              "description": "Handoff to the Destination Agent agent to handle the request. ",
-              "name": "transfer_to_Destination_Agent",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": [],
-                "additionalProperties": false
-              },
-              "strict": true
-            },
-            {
-              "type": "function",
-              "description": "Handoff to the Itinerary Agent agent to handle the request. ",
-              "name": "transfer_to_Itinerary_Agent",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": [],
-                "additionalProperties": false
-              },
-              "strict": true
-            },
-            {
-              "type": "function",
-              "description": "Handoff to the Booking Agent agent to handle the request. ",
-              "name": "transfer_to_Booking_Agent",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": [],
-                "additionalProperties": false
-              },
-              "strict": true
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 1,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 365,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 344,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 709
-          },
-          "user": null,
-          "metadata": {},
-          "output_text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-        }
-      }
-    ],
-    "context": {
-      "usage": {
-        "requests": 1,
-        "inputTokens": 365,
-        "outputTokens": 344,
-        "totalTokens": 709
-      },
-      "approvals": {},
-      "context": {
-        "pax": 2
-      }
-    },
-    "toolUseTracker": {
-      "Gateway (Triage) Agent": []
-    },
-    "maxTurns": 10,
-    "currentAgentSpan": {
-      "object": "trace.span",
-      "id": "span_e07486ee8f9f40008de53649",
-      "trace_id": "trace_083aca31cf5042ad8fcbb3ae58bc7b0a",
-      "parent_id": null,
-      "started_at": "2025-09-09T12:52:22.165Z",
-      "ended_at": "2025-09-09T12:52:29.417Z",
-      "error": null,
-      "span_data": {
-        "type": "agent",
-        "name": "Gateway (Triage) Agent",
-        "handoffs": [
-          "Destination Agent",
-          "Itinerary Agent",
-          "Booking Agent"
-        ],
-        "output_type": "text",
-        "tools": []
-      }
-    },
-    "noActiveAgentRun": false,
-    "inputGuardrailResults": [],
-    "outputGuardrailResults": [],
-    "currentStep": {
-      "type": "next_step_final_output",
-      "output": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-    },
-    "lastModelResponse": {
-      "usage": {
-        "requests": 1,
-        "inputTokens": 365,
-        "outputTokens": 344,
-        "totalTokens": 709
-      },
-      "output": [
-        {
-          "providerData": {},
-          "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-          "type": "message",
-          "role": "assistant",
-          "status": "completed",
-          "content": [
-            {
-              "type": "output_text",
-              "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-            }
-          ]
-        }
-      ],
-      "responseId": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
-      "providerData": {
-        "id": "resp_68c02306682c8190add2064def18ac770b085f20f8dddb39",
-        "object": "response",
-        "created_at": 1757422342,
-        "status": "completed",
-        "background": false,
-        "error": null,
-        "incomplete_details": null,
-        "instructions": "# System context\nYou are part of a multi-agent system called the Agents SDK, designed to make agent coordination and execution easy. Agents uses two primary abstractions: **Agents** and **Handoffs**. An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate. Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`. Transfers between agents are handled seamlessly in the background; do not mention or draw attention to these transfers in your conversation with the user.\nYou orchestrate the travel flow. Internally decide when to hand off:\n\n- If the user is CHOOSING or VERIFYING a destination → hand off to Destination Agent.\n- If the user requests an ITINERARY and destination seems chosen → hand off to Itinerary Agent.\n- If the user wants to BOOK and itinerary looks done → hand off to Booking Agent.\n- If the user skips steps (e.g., asks itinerary without destination verification),\n  you MAY still hand off to Itinerary Agent; Itinerary will internally call Destination as a tool\n  to backfill visa/safety checks (keep this invisible to the user).\n\nBe brief, keep tone consistent, and never expose internal routing.\n",
-        "max_output_tokens": null,
-        "max_tool_calls": null,
-        "model": "gpt-4.1-2025-04-14",
-        "output": [
-          {
-            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-            "type": "message",
-            "status": "completed",
-            "content": [
-              {
-                "type": "output_text",
-                "annotations": [],
-                "logprobs": [],
-                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-              }
-            ],
-            "role": "assistant"
-          }
-        ],
-        "parallel_tool_calls": true,
-        "previous_response_id": null,
-        "prompt_cache_key": null,
-        "reasoning": {
-          "effort": null,
-          "summary": null
-        },
-        "safety_identifier": null,
-        "service_tier": "default",
-        "store": true,
-        "temperature": 1,
-        "text": {
-          "format": {
-            "type": "text"
-          },
-          "verbosity": "medium"
-        },
-        "tool_choice": "auto",
-        "tools": [
-          {
-            "type": "function",
-            "description": "Handoff to the Destination Agent agent to handle the request. ",
-            "name": "transfer_to_Destination_Agent",
-            "parameters": {
-              "type": "object",
-              "properties": {},
-              "required": [],
-              "additionalProperties": false
-            },
-            "strict": true
-          },
-          {
-            "type": "function",
-            "description": "Handoff to the Itinerary Agent agent to handle the request. ",
-            "name": "transfer_to_Itinerary_Agent",
-            "parameters": {
-              "type": "object",
-              "properties": {},
-              "required": [],
-              "additionalProperties": false
-            },
-            "strict": true
-          },
-          {
-            "type": "function",
-            "description": "Handoff to the Booking Agent agent to handle the request. ",
-            "name": "transfer_to_Booking_Agent",
-            "parameters": {
-              "type": "object",
-              "properties": {},
-              "required": [],
-              "additionalProperties": false
-            },
-            "strict": true
-          }
-        ],
-        "top_logprobs": 0,
-        "top_p": 1,
-        "truncation": "disabled",
-        "usage": {
-          "input_tokens": 365,
-          "input_tokens_details": {
-            "cached_tokens": 0
-          },
-          "output_tokens": 344,
-          "output_tokens_details": {
-            "reasoning_tokens": 0
-          },
-          "total_tokens": 709
-        },
-        "user": null,
-        "metadata": {},
-        "output_text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-      }
-    },
-    "generatedItems": [
-      {
-        "type": "message_output_item",
-        "rawItem": {
-          "providerData": {},
-          "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-          "type": "message",
-          "role": "assistant",
-          "status": "completed",
-          "content": [
-            {
-              "type": "output_text",
-              "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-            }
-          ]
-        },
-        "agent": {
-          "name": "Gateway (Triage) Agent"
-        }
-      }
-    ],
-    "lastProcessedResponse": {
-      "newItems": [
-        {
-          "type": "message_output_item",
-          "rawItem": {
-            "providerData": {},
-            "id": "msg_68c023070070819088f7a92c017f026a0b085f20f8dddb39",
-            "type": "message",
-            "role": "assistant",
-            "status": "completed",
-            "content": [
-              {
-                "type": "output_text",
-                "text": "Both Tokyo and Kyoto are incredible destinations, but they offer different experiences:\n\n**Tokyo**  \n- **Modern & Historic:** A vibrant metropolis with cutting-edge technology, towering skyscrapers, and unique neighborhoods (Shibuya, Shinjuku, Akihabara).  \n- **World-Class Food & Shopping:** Endless choices from sushi to international cuisine, plus famous shopping districts like Ginza and Harajuku.  \n- **Cultural Sites:** Historic temples (Meiji Shrine, Senso-ji), but fewer than Kyoto.  \n- **Day Trips:** Easy access to places like Yokohama, Nikko, or Mt. Fuji.\n\n**Kyoto**  \n- **Rich Tradition:** The heart of classic Japanese culture, famous for its beautiful temples, shrines, and gardens (Fushimi Inari, Kinkaku-ji).  \n- **Historic Streets:** Charming districts with preserved old wooden houses (Gion, Higashiyama), plus the chance to spot geisha.  \n- **Pace:** Quieter and more relaxed than Tokyo; ideal for traditional tea ceremonies, walks, and cultural immersion.  \n- **Seasonal Beauty:** Famous for cherry blossoms in spring and colorful leaves in autumn.\n\n**Decision Guide:**  \n- If you want an energetic city with lots to do and see, choose **Tokyo**.\n- If you prefer culture, tradition, and a slower pace, pick **Kyoto**.\n- Both cities have excellent food, stunning sights, and unique experiences. For 5 days, either is enough to get a real taste.\n\nLet me know your preferences—do you lean toward modern energy or traditional charm? If you want a tailored recommendation, I can help!"
-              }
-            ]
-          },
-          "agent": {
-            "name": "Gateway (Triage) Agent"
-          }
-        }
-      ],
-      "toolsUsed": [],
-      "handoffs": [],
-      "functions": [],
-      "computerActions": [],
-      "mcpApprovalRequests": []
-    },
-    "trace": {
-      "object": "trace",
-      "id": "trace_083aca31cf5042ad8fcbb3ae58bc7b0a",
-      "workflow_name": "Agent workflow",
-      "group_id": null,
-      "metadata": {}
-    }
-  }
-}
+id: 1757509672063-0
+data: {"status":"in-progress","data":[{"type":"text","text":"Here"},{"type":"text","text":" are"},{"type":"text","text":" some"}]}
+
+id: 1757509672164-0
+data: {"status":"in-progress","data":[{"type":"text","text":" incredible"},{"type":"text","text":" destinations"},{"type":"text","text":" in"}]}
+
+id: 1757509672331-0
+data: {"status":"in-progress","data":[{"type":"text","text":" India"},{"type":"text","text":" famous"},{"type":"text","text":" for"}]}
+
+id: 1757509672365-0
+data: {"status":"in-progress","data":[{"type":"text","text":" their"},{"type":"text","text":" beautiful"},{"type":"text","text":" mountains"}]}
+
+id: 1757509672498-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" each"},{"type":"text","text":" offering"}]}
+
+id: 1757509672500-0
+data: {"status":"in-progress","data":[{"type":"text","text":" unique"},{"type":"text","text":" landscapes"},{"type":"text","text":" and"}]}
+
+id: 1757509672611-0
+data: {"status":"in-progress","data":[{"type":"text","text":" experiences"},{"type":"text","text":":\n\n"},{"type":"text","text":"###"}]}
+
+id: 1757509672623-0
+data: {"status":"in-progress","data":[{"type":"text","text":" Recommendations"},{"type":"text","text":" for"},{"type":"text","text":" Mountain"}]}
+
+id: 1757509672795-0
+data: {"status":"in-progress","data":[{"type":"text","text":" Lovers"},{"type":"text","text":" 🏔"},{"type":"text","text":"️"}]}
+
+id: 1757509672827-0
+data: {"status":"in-progress","data":[{"type":"text","text":"\n\n"},{"type":"text","text":"-"},{"type":"text","text":" "}]}
+
+id: 1757509673264-0
+data: {"status":"in-progress","data":[{"type":"text","text":"Gangtok"},{"type":"place","start":182,"end":189,"place":{"name":"Gangtok","country_code":"IN","latitude":27.33333,"longitude":88.61667,"description":"Gangtok, the capital of Sikkim, is a picturesque municipality located in East Sikkim, India. Nestled in the Himalayas, it offers","canonical_url":"https://mindtrip.ai/location/gangtok-sikkim/gangtok/lo-KCpC75UV","canonical_location":"gangtok-sikkim","canonical_name":"gangtok","location_canonical_url":"https://mindtrip.ai/location/gangtok-sikkim/gangtok/lo-KCpC75UV","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fgangtok-sikkim%2Fgangtok%2Flo-KCpC75UV%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Gangtok+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Gangtok+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fgangtok-sikkim%2Fgangtok%2Flo-KCpC75UV%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-KCpC75UV","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8258977157077294,"photos":[{"url":"/locations/0649/af3e/f8f2/025e/608b/6b8a/4e5a/49d2","width":1600,"height":1200,"additional_information":{"photographer_name":"Sreerama Chandra Murthy Kilaparthi","photographer_link":"https://maps.google.com/maps/contrib/101976477253267142583"}},{"url":"/locations/ed18/1ec7/c8df/6ca9/fad3/8cf1/e812/bdab","width":1600,"height":1200,"additional_information":{"photographer_name":"Shani kumar","photographer_link":"https://maps.google.com/maps/contrib/103704238497758617140"}},{"url":"/locations/1fa4/812b/6c98/c554/61c7/b7e7/c2af/1b14","width":1280,"height":960,"additional_information":{"photographer_name":"Banti Kar","photographer_link":"https://maps.google.com/maps/contrib/106643066296720049320"}},{"url":"/locations/085e/4722/c25d/bc3c/e30e/2f86/626f/4990","width":1200,"height":1600,"additional_information":{"photographer_name":"Kanhaiya Pathak","photographer_link":"https://maps.google.com/maps/contrib/106596234219996973506"}},{"url":"/locations/4194/9f9b/9928/1f3c/bdc7/65f5/f9a4/cbc2","width":1200,"height":1600,"additional_information":{"photographer_name":"fighter x official YT","photographer_link":"https://maps.google.com/maps/contrib/111702697341514592125"}}],"place_country":"IN","city":"Gangtok","country":"India","region":"Sikkim","continent":"Asia","formatted_address":"Gangtok, India","time_zone":"Asia/Kolkata","type":"location","categories":null,"category_label":"Sikkim, India","category":"municipality","category_tier":"city_tier","population":100286,"density":26.423859309958505}}]}
+
+id: 1757509673265-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" Nest"},{"type":"text","text":"led"}]}
+
+id: 1757509673338-0
+data: {"status":"in-progress","data":[{"type":"text","text":" in"},{"type":"text","text":" the"},{"type":"text","text":" Eastern"}]}
+
+id: 1757509673423-0
+data: {"status":"in-progress","data":[{"type":"text","text":" Himal"},{"type":"text","text":"ayas"},{"type":"text","text":","}]}
+
+id: 1757509673582-0
+data: {"status":"in-progress","data":[{"type":"text","text":" this"},{"type":"text","text":" city"},{"type":"text","text":" offers"}]}
+
+id: 1757509673685-0
+data: {"status":"in-progress","data":[{"type":"text","text":" breathtaking"},{"type":"text","text":" views"},{"type":"text","text":" of"}]}
+
+id: 1757509674362-0
+data: {"status":"in-progress","data":[{"type":"text","text":" "},{"type":"text","text":"Kanchenjunga"},{"type":"place","start":264,"end":276,"place":{"name":"Kangchenjunga","country_code":"IN","latitude":27.7024914,"longitude":88.14753499999999,"total_user_reviews":4145,"user_rating":4.7,"description":"Kangchenjunga, standing at 8,586 meters (28,169 feet), is the world's third-highest mountain, straddling the border between Nepa","canonical_url":"https://mindtrip.ai/attraction/sikkim/kangchenjunga/at-KgYvV9Zj","canonical_location":"sikkim","canonical_name":"kangchenjunga","location_canonical_url":"https://mindtrip.ai/location/sikkim/north-sikkim/lo-7xxvPIgZ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fsikkim%2Fkangchenjunga%2Fat-KgYvV9Zj%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Kangchenjunga+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Kangchenjunga+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fsikkim%2Fkangchenjunga%2Fat-KgYvV9Zj%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"at-KgYvV9Zj","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9406016779986534,"overall_aesthetic_rank":null,"photos":[{"url":"/attractions/1509/c5ab/9474/c323/5523/f87d/88b8/25c2","width":1600,"height":1200,"additional_information":{"photographer_name":"Walid Hasan","photographer_link":"https://maps.google.com/maps/contrib/101343438094911013140"}},{"url":"/attractions/357f/ecd4/53cf/10dd/890e/e8bd/7b02/dff9","width":1600,"height":1200,"additional_information":{"photographer_name":"Yaman rajput","photographer_link":"https://maps.google.com/maps/contrib/105522016872483982624"}},{"url":"/attractions/35e7/bc94/8d4e/fc2f/b235/19b8/3807/b05a","width":1600,"height":1067,"additional_information":{"photographer_name":"Nit Patel","photographer_link":"https://maps.google.com/maps/contrib/106619207444516578096"}},{"url":"/attractions/4b0d/76ef/313a/e9fc/6fc8/97be/adfe/69c8","width":1600,"height":1200,"additional_information":{"photographer_name":"G MiTRA","photographer_link":"https://maps.google.com/maps/contrib/112978885742811174463"}},{"url":"/attractions/4022/618f/30aa/5555/d7d9/4db4/4a80/61cd","width":1080,"height":1080,"additional_information":{"photographer_name":"Ramesh Smile","photographer_link":"https://maps.google.com/maps/contrib/109024979735710806872"}}],"place_city":"Lelep","place_state":"Koshi Province","place_country":"IN","state":"Koshi Province","country":"India","region":"Sikkim","continent":"Asia","formatted_address":"Kangchenjunga","time_zone":"Asia/Kolkata","type":"attraction","categories":["nature_site","national_state_park","trail","adventure"],"category_label":"Attraction"}}]}
+
+id: 1757509674470-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" lush"},{"type":"text","text":" valleys"}]}
+
+id: 1757509674708-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" and"},{"type":"text","text":" vibrant"}]}
+
+id: 1757509674880-0
+data: {"status":"in-progress","data":[{"type":"text","text":" monaster"},{"type":"text","text":"ies"},{"type":"text","text":".\n"}]}
+
+id: 1757509675786-0
+data: {"status":"in-progress","data":[{"type":"text","text":"-"},{"type":"text","text":" "},{"type":"text","text":"Shillong"}]}
+
+id: 1757509675807-0
+data: {"status":"in-progress","data":[{"type":"place","start":319,"end":327,"place":{"name":"Shillong","country_code":"IN","latitude":25.59707,"longitude":91.88763,"total_user_reviews":0,"url":"http://smb.gov.in/","description":"Shillong, the capital city of Meghalaya, India, is a beautiful hill station known for its picturesque landscapes and rich cultur","canonical_url":"https://mindtrip.ai/location/shillong-meghalaya/shillong/lo-Q4VRkAFb","canonical_location":"shillong-meghalaya","canonical_name":"shillong","location_canonical_url":"https://mindtrip.ai/location/shillong-meghalaya/shillong/lo-Q4VRkAFb","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fshillong-meghalaya%2Fshillong%2Flo-Q4VRkAFb%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Shillong+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Shillong+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fshillong-meghalaya%2Fshillong%2Flo-Q4VRkAFb%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-Q4VRkAFb","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8220669912076042,"photos":[{"url":"/locations/2a12/ab7f/f435/911a/0e18/1faa/b8aa/8af9","width":1600,"height":1200,"additional_information":{"photographer_name":"swapan kumar paul","photographer_link":"https://maps.google.com/maps/contrib/106929023122724591420"}},{"url":"/locations/ae5f/1b58/cbcd/f5cb/b0fe/550a/d371/99f7","width":1600,"height":1200,"additional_information":{"photographer_name":"kkvlogs","photographer_link":"https://maps.google.com/maps/contrib/116334564965962060751"}},{"url":"/locations/d85d/f30d/648e/054b/344d/5be7/24a1/8320","width":1600,"height":1200,"additional_information":{"photographer_name":"Shashank Jathan","photographer_link":"https://maps.google.com/maps/contrib/101076705940741529647"}},{"url":"/locations/ffa1/25d5/a0ae/c001/572c/81b9/c71c/cab8","width":1280,"height":720,"additional_information":{"photographer_name":"Dr. Mohd. Atif Khan","photographer_link":"https://maps.google.com/maps/contrib/107130138439778918249"}},{"url":"/locations/105f/7827/249d/3499/ac0d/7994/82fb/7a65","width":1080,"height":1350,"additional_information":{"photographer_name":"all in one channel","photographer_link":"https://maps.google.com/maps/contrib/103216669677367665543"}}],"place_country":"IN","city":"Shillong","country":"India","region":"Meghalaya","continent":"Asia","formatted_address":"Shillong, India","time_zone":"Asia/Kolkata","type":"location","categories":[],"category_label":"Meghalaya, India","category":"city","category_tier":"city_tier","population":143229,"density":37.23618874301313}}]}
+
+id: 1757509675808-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" Known"},{"type":"text","text":" as"}]}
+
+id: 1757509675853-0
+data: {"status":"in-progress","data":[{"type":"text","text":" the"},{"type":"text","text":" \""},{"type":"text","text":"Sc"}]}
+
+id: 1757509675941-0
+data: {"status":"in-progress","data":[{"type":"text","text":"otland"},{"type":"text","text":" of"},{"type":"text","text":" the"}]}
+
+id: 1757509675994-0
+data: {"status":"in-progress","data":[{"type":"text","text":" East"},{"type":"text","text":",\""},{"type":"text","text":" it"}]}
+
+id: 1757509676114-0
+data: {"status":"in-progress","data":[{"type":"text","text":" features"},{"type":"text","text":" rolling"},{"type":"text","text":" hills"}]}
+
+id: 1757509676201-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" pristine"},{"type":"text","text":" lakes"}]}
+
+id: 1757509676285-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" and"},{"type":"text","text":" charming"}]}
+
+id: 1757509676333-0
+data: {"status":"in-progress","data":[{"type":"text","text":" colonial"},{"type":"text","text":" architecture"},{"type":"text","text":".\n"}]}
+
+id: 1757509676856-0
+data: {"status":"in-progress","data":[{"type":"text","text":"-"},{"type":"text","text":" "},{"type":"text","text":"Manali"}]}
+
+id: 1757509676869-0
+data: {"status":"in-progress","data":[{"type":"place","start":447,"end":453,"place":{"name":"Manali","country_code":"IN","latitude":32.23726,"longitude":77.18691,"description":"Manali is a picturesque municipality located in the Kullu District of Himachal Pradesh, India. Nestled in the northern part of t","canonical_url":"https://mindtrip.ai/location/manali-himachal-pradesh/manali/lo-YCM4bI9s","canonical_location":"manali-himachal-pradesh","canonical_name":"manali","location_canonical_url":"https://mindtrip.ai/location/manali-himachal-pradesh/manali/lo-YCM4bI9s","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmanali-himachal-pradesh%2Fmanali%2Flo-YCM4bI9s%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Manali+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Manali+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmanali-himachal-pradesh%2Fmanali%2Flo-YCM4bI9s%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-YCM4bI9s","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8468640144308985,"photos":[{"url":"/locations/0ea9/1abd/6d5c/19df/f2fc/c85c/a165/b93a","width":1600,"height":1200,"additional_information":{"photographer_name":"Hrishabh Kumar","photographer_link":"https://maps.google.com/maps/contrib/110236104164978956206"}},{"url":"/locations/5f72/93a4/1bae/c4ac/ed11/f0c4/05ad/8db9","width":1600,"height":900,"additional_information":{"photographer_name":"Swapnil Jadhav","photographer_link":"https://maps.google.com/maps/contrib/111037831397775991220"}},{"url":"/locations/f1b5/6c47/dd34/75e1/5ea0/0900/6c38/8f5c","width":1600,"height":1200,"additional_information":{"photographer_name":"Dr. Saurabh Bansal","photographer_link":"https://maps.google.com/maps/contrib/106560798279148297561"}},{"url":"/locations/f21f/cd59/db94/ce45/d21e/fa59/e35a/bca8","width":1600,"height":1200,"additional_information":{"photographer_name":"Hemanaath Mdv","photographer_link":"https://maps.google.com/maps/contrib/116922158002017062278"}},{"url":"/locations/bc46/f56e/9803/f7ef/b516/ffb6/c7b1/f771","width":1200,"height":1600,"additional_information":{"photographer_name":"Vicky Koundal","photographer_link":"https://maps.google.com/maps/contrib/116287670799529767371"}}],"place_country":"IN","city":"Manali","country":"India","region":"Himachal Pradesh","continent":"Asia","formatted_address":"Manali, India","time_zone":"Asia/Kolkata","type":"location","categories":[],"category_label":"Himachal Pradesh, India","category":"municipality","category_tier":"city_tier","population":8096,"density":37.783931738049084}}]}
+
+id: 1757509676884-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" A"},{"type":"text","text":" paradise"}]}
+
+id: 1757509676929-0
+data: {"status":"in-progress","data":[{"type":"text","text":" for"},{"type":"text","text":" adventure"},{"type":"text","text":" seekers"}]}
+
+id: 1757509677004-0
+data: {"status":"in-progress","data":[{"type":"text","text":" with"},{"type":"text","text":" snow"},{"type":"text","text":"-c"}]}
+
+id: 1757509677065-0
+data: {"status":"in-progress","data":[{"type":"text","text":"apped"},{"type":"text","text":" peaks"},{"type":"text","text":","}]}
+
+id: 1757509677257-0
+data: {"status":"in-progress","data":[{"type":"text","text":" apple"},{"type":"text","text":" orch"},{"type":"text","text":"ards"}]}
+
+id: 1757509677345-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" and"},{"type":"text","text":" access"}]}
+
+id: 1757509677596-0
+data: {"status":"in-progress","data":[{"type":"text","text":" to"},{"type":"text","text":" Sol"},{"type":"text","text":"ang"}]}
+
+id: 1757509677754-0
+data: {"status":"in-progress","data":[{"type":"text","text":" Valley"},{"type":"text","text":" and"},{"type":"text","text":" Ro"}]}
+
+id: 1757509677958-0
+data: {"status":"in-progress","data":[{"type":"text","text":"ht"},{"type":"text","text":"ang"},{"type":"text","text":" Pass"}]}
+
+id: 1757509678188-0
+data: {"status":"in-progress","data":[{"type":"text","text":".\n"},{"type":"text","text":"-"},{"type":"text","text":" "}]}
+
+id: 1757509678781-0
+data: {"status":"in-progress","data":[{"type":"text","text":"Leh-Ladakh"},{"type":"place","start":576,"end":586,"place":{"name":"Leh City Market , Ladakh","country_code":"IN","latitude":34.1622742,"longitude":77.58558839999999,"total_user_reviews":928,"user_rating":4.5,"description":"Leh City Market is a vibrant hub located in the heart of Ladakh, known for its rich cultural atmosphere and the unique blend of ","canonical_url":"https://mindtrip.ai/attraction/leh-ladakh/leh-city-market-ladakh/at-23vLOEOi","canonical_location":"leh-ladakh","canonical_name":"leh-city-market-ladakh","location_canonical_url":"https://mindtrip.ai/location/leh-ladakh/leh/lo-TVpQHb0q","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fleh-ladakh%2Fleh-city-market-ladakh%2Fat-23vLOEOi%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Leh+City+Market+%2C+Ladakh+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Leh+City+Market+%2C+Ladakh+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fleh-ladakh%2Fleh-city-market-ladakh%2Fat-23vLOEOi%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"at-23vLOEOi","status":"OPERATIONAL","providers":["google_places"],"pscore":0.7468120904437695,"overall_aesthetic_rank":null,"photos":[{"url":"/attractions/4545/1b7d/20c3/369c/b3d3/96d4/1d64/a780","width":1600,"height":900,"additional_information":{"photographer_name":"Capt. Biswadeep Bhattacharyya","photographer_link":"https://maps.google.com/maps/contrib/104253715759672455419"}},{"url":"/attractions/1a0a/95d1/50d0/5cca/cc56/776c/6721/3066","width":1600,"height":1200,"additional_information":{"photographer_name":"Hemanth Chandra","photographer_link":"https://maps.google.com/maps/contrib/110672456121719207759"}},{"url":"/attractions/6a4d/936e/fe9e/f206/9e79/eee2/922c/8b46","width":1600,"height":1200,"additional_information":{"photographer_name":"SURESH MITTAL","photographer_link":"https://maps.google.com/maps/contrib/116915585693986530869"}},{"url":"/attractions/85d9/abb8/d737/946a/0c82/c43e/6287/a88a","width":1600,"height":900,"additional_information":{"photographer_name":"Ohm Jha","photographer_link":"https://maps.google.com/maps/contrib/104190536000735181331"}},{"url":"/attractions/9da9/de41/1110/a779/5153/428a/a76e/ef94","width":1600,"height":901,"additional_information":{"photographer_name":"Van Tran","photographer_link":"https://maps.google.com/maps/contrib/102765138284634732397"}}],"place_city":"Leh","place_state":"Ladakh","place_country":"IN","city":"Leh","state":"Ladakh","country":"India","region":"Ladakh","continent":"Asia","formatted_address":"5H6P+W64, Balkhang Chowk Main Market, 194101","time_zone":"Asia/Kolkata","type":"attraction","categories":["shopping"],"category_label":"Attraction"}}]}
+
+id: 1757509678784-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" Famous"},{"type":"text","text":" for"}]}
+
+id: 1757509678786-0
+data: {"status":"in-progress","data":[{"type":"text","text":" dramatic"},{"type":"text","text":" landscapes"},{"type":"text","text":","}]}
+
+id: 1757509678873-0
+data: {"status":"in-progress","data":[{"type":"text","text":" high"},{"type":"text","text":"-alt"},{"type":"text","text":"itude"}]}
+
+id: 1757509678933-0
+data: {"status":"in-progress","data":[{"type":"text","text":" deserts"},{"type":"text","text":","},{"type":"text","text":" crystal"}]}
+
+id: 1757509679092-0
+data: {"status":"in-progress","data":[{"type":"text","text":"-clear"},{"type":"text","text":" lakes"},{"type":"text","text":","}]}
+
+id: 1757509679229-0
+data: {"status":"in-progress","data":[{"type":"text","text":" and"},{"type":"text","text":" Tibetan"},{"type":"text","text":" Buddhist"}]}
+
+id: 1757509679306-0
+data: {"status":"in-progress","data":[{"type":"text","text":" culture"},{"type":"text","text":".\n"},{"type":"text","text":"-"}]}
+
+id: 1757509679762-0
+data: {"status":"in-progress","data":[{"type":"text","text":" "},{"type":"text","text":"Munnar"},{"type":"place","start":696,"end":702,"place":{"name":"Munnar","country_code":"IN","latitude":10.0862,"longitude":77.06101,"description":"Munnar, located in the Idukki District of Kerala, India, is a picturesque hill station known for its sprawling tea plantations, ","canonical_url":"https://mindtrip.ai/location/munnar-kerala/munnar/lo-d5jQQe74","canonical_location":"munnar-kerala","canonical_name":"munnar","location_canonical_url":"https://mindtrip.ai/location/munnar-kerala/munnar/lo-d5jQQe74","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmunnar-kerala%2Fmunnar%2Flo-d5jQQe74%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Munnar+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Munnar+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmunnar-kerala%2Fmunnar%2Flo-d5jQQe74%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-d5jQQe74","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8088538159690081,"photos":[{"url":"/locations/0409/93bd/1214/e030/2711/bea7/5d90/7a4a","width":1600,"height":1067,"additional_information":{"photographer_name":"RAJ","photographer_link":"https://maps.google.com/maps/contrib/117936498567210120351"}},{"url":"/locations/4bc1/b3da/acb6/f9ea/c3a6/0be7/6f27/359c","width":1600,"height":1200,"additional_information":{"photographer_name":"JOHN JACOB","photographer_link":"https://maps.google.com/maps/contrib/104261409955891037204"}},{"url":"/locations/5dbe/fd00/6a39/8453/3ac8/38e3/7cd5/34dc","width":1600,"height":879,"additional_information":{"photographer_name":"BIJU MON VN","photographer_link":"https://maps.google.com/maps/contrib/101294983031972989591"}},{"url":"/locations/9ae1/4d9e/0411/7f7f/4725/74a6/d47a/7ca2","width":1600,"height":900,"additional_information":{"photographer_name":"vinoth Rajendran","photographer_link":"https://maps.google.com/maps/contrib/102183508747402562502"}},{"url":"/locations/d2a0/8701/f406/e367/b79f/0c9b/636e/2020","width":1600,"height":1200,"additional_information":{"photographer_name":"Diksha Shetty","photographer_link":"https://maps.google.com/maps/contrib/102619331549904490252"}}],"place_country":"IN","city":"Munnar","country":"India","region":"Kerala","continent":"Asia","formatted_address":"Munnar, India","time_zone":"Asia/Kolkata","type":"location","categories":null,"category_label":"Kerala, India","category":"municipality","category_tier":"city_tier","population":46000,"area":245,"density":17.559754849577928}}]}
+
+id: 1757509679764-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" This"},{"type":"text","text":" hill"}]}
+
+id: 1757509679907-0
+data: {"status":"in-progress","data":[{"type":"text","text":" station"},{"type":"text","text":" is"},{"type":"text","text":" renowned"}]}
+
+id: 1757509679969-0
+data: {"status":"in-progress","data":[{"type":"text","text":" for"},{"type":"text","text":" its"},{"type":"text","text":" tea"}]}
+
+id: 1757509679996-0
+data: {"status":"in-progress","data":[{"type":"text","text":" gardens"},{"type":"text","text":","},{"type":"text","text":" mist"}]}
+
+id: 1757509680201-0
+data: {"status":"in-progress","data":[{"type":"text","text":"y"},{"type":"text","text":" hills"},{"type":"text","text":","}]}
+
+id: 1757509680214-0
+data: {"status":"in-progress","data":[{"type":"text","text":" and"},{"type":"text","text":" wildlife"},{"type":"text","text":" sanct"}]}
+
+id: 1757509680309-0
+data: {"status":"in-progress","data":[{"type":"text","text":"u"},{"type":"text","text":"aries"},{"type":"text","text":" in"}]}
+
+id: 1757509680433-0
+data: {"status":"in-progress","data":[{"type":"text","text":" the"},{"type":"text","text":" Western"},{"type":"text","text":" Gh"}]}
+
+id: 1757509680446-0
+data: {"status":"in-progress","data":[{"type":"text","text":"ats"},{"type":"text","text":".\n"},{"type":"text","text":"-"}]}
+
+id: 1757509680889-0
+data: {"status":"in-progress","data":[{"type":"text","text":" "},{"type":"text","text":"Ooty"},{"type":"place","start":817,"end":821,"place":{"name":"Ooty (Udhagamandalam)","country_code":"IN","latitude":11.41138,"longitude":76.69518,"description":"Ooty, also known as Udhagamandalam, is a charming hill station in the Nilgiris District of Tamil Nadu, India. Known for its brea","canonical_url":"https://mindtrip.ai/location/ooty-udhagamandalam-tamil-nadu/ooty-udhagamandalam/lo-KBuzlZ6o","canonical_location":"ooty-udhagamandalam-tamil-nadu","canonical_name":"ooty-udhagamandalam","location_canonical_url":"https://mindtrip.ai/location/ooty-udhagamandalam-tamil-nadu/ooty-udhagamandalam/lo-KBuzlZ6o","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Footy-udhagamandalam-tamil-nadu%2Footy-udhagamandalam%2Flo-KBuzlZ6o%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Ooty+%28Udhagamandalam%29+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Ooty+%28Udhagamandalam%29+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Footy-udhagamandalam-tamil-nadu%2Footy-udhagamandalam%2Flo-KBuzlZ6o%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-KBuzlZ6o","status":"OPERATIONAL","providers":["google_places"],"pscore":0.7808094610135177,"photos":[{"url":"/locations/1426/3bdb/f984/326a/f0dc/4113/f1f6/888c","width":1600,"height":900,"additional_information":{"photographer_name":"Shivam Patel","photographer_link":"https://maps.google.com/maps/contrib/107367237083798093331"}},{"url":"/locations/14ad/72d7/a587/3106/7108/f8a8/687d/2904","width":1600,"height":1200,"additional_information":{"photographer_name":"Koyel Bhowmik","photographer_link":"https://maps.google.com/maps/contrib/118249597213015682392"}},{"url":"/locations/43e0/b148/a593/90f3/4f3b/ae01/d981/ff15","width":1600,"height":1200,"additional_information":{"photographer_name":"Mohammed Ashraf kk","photographer_link":"https://maps.google.com/maps/contrib/107161947501290469095"}},{"url":"/locations/6fba/d6c2/995d/38b0/1404/0c71/b072/6f5b","width":1600,"height":742,"additional_information":{"photographer_name":"Akash Kumar","photographer_link":"https://maps.google.com/maps/contrib/107445046318638169063"}},{"url":"/locations/b8a1/fe5a/574f/dce8/7c6c/f555/3627/0af4","width":1600,"height":685,"additional_information":{"photographer_name":"R S","photographer_link":"https://maps.google.com/maps/contrib/102651331665856376432"}}],"place_country":"IN","city":"Ooty (Udhagamandalam)","country":"India","region":"Tamil Nadu","continent":"Asia","formatted_address":"Ooty (Udhagamandalam), India","time_zone":"Asia/Kolkata","type":"location","categories":["travel_agency","tea","garden","hills","mountains","rural","valley","forest"],"category_label":"Tamil Nadu, India","category":"city","category_tier":"city_tier","density":1.2184541773192017}}]}
+
+id: 1757509680909-0
+data: {"status":"in-progress","data":[{"type":"text","text":":"},{"type":"text","text":" Sur"},{"type":"text","text":"rounded"}]}
+
+id: 1757509680986-0
+data: {"status":"in-progress","data":[{"type":"text","text":" by"},{"type":"text","text":" the"},{"type":"text","text":" Nil"}]}
+
+id: 1757509681182-0
+data: {"status":"in-progress","data":[{"type":"text","text":"g"},{"type":"text","text":"iri"},{"type":"text","text":" hills"}]}
+
+id: 1757509681258-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" it"},{"type":"text","text":"’s"}]}
+
+id: 1757509681338-0
+data: {"status":"in-progress","data":[{"type":"text","text":" famous"},{"type":"text","text":" for"},{"type":"text","text":" scenic"}]}
+
+id: 1757509681405-0
+data: {"status":"in-progress","data":[{"type":"text","text":" train"},{"type":"text","text":" rides"},{"type":"text","text":","}]}
+
+id: 1757509681513-0
+data: {"status":"in-progress","data":[{"type":"text","text":" botanical"},{"type":"text","text":" gardens"},{"type":"text","text":","}]}
+
+id: 1757509681564-0
+data: {"status":"in-progress","data":[{"type":"text","text":" and"},{"type":"text","text":" cool"},{"type":"text","text":" mountain"}]}
+
+id: 1757509681627-0
+data: {"status":"in-progress","data":[{"type":"text","text":" air"},{"type":"text","text":".\n\n"},{"type":"text","text":"###"}]}
+
+id: 1757509681730-0
+data: {"status":"in-progress","data":[{"type":"text","text":" Conclusion"},{"type":"text","text":"\n"},{"type":"text","text":"If"}]}
+
+id: 1757509681794-0
+data: {"status":"in-progress","data":[{"type":"text","text":" you"},{"type":"text","text":" love"},{"type":"text","text":" scenic"}]}
+
+id: 1757509681840-0
+data: {"status":"in-progress","data":[{"type":"text","text":" beauty"},{"type":"text","text":","},{"type":"text","text":" adventure"}]}
+
+id: 1757509681936-0
+data: {"status":"in-progress","data":[{"type":"text","text":","},{"type":"text","text":" or"},{"type":"text","text":" a"}]}
+
+id: 1757509682002-0
+data: {"status":"in-progress","data":[{"type":"text","text":" peaceful"},{"type":"text","text":" retreat"},{"type":"text","text":","}]}
+
+id: 1757509682125-0
+data: {"status":"in-progress","data":[{"type":"text","text":" these"},{"type":"text","text":" destinations"},{"type":"text","text":" have"}]}
+
+id: 1757509682164-0
+data: {"status":"in-progress","data":[{"type":"text","text":" something"},{"type":"text","text":" unique"},{"type":"text","text":" to"}]}
+
+id: 1757509682303-0
+data: {"status":"in-progress","data":[{"type":"text","text":" offer"},{"type":"text","text":"."},{"type":"text","text":" Would"}]}
+
+id: 1757509682432-0
+data: {"status":"in-progress","data":[{"type":"text","text":" you"},{"type":"text","text":" like"},{"type":"text","text":" more"}]}
+
+id: 1757509682553-0
+data: {"status":"in-progress","data":[{"type":"text","text":" details"},{"type":"text","text":" or"},{"type":"text","text":" a"}]}
+
+id: 1757509682614-0
+data: {"status":"in-progress","data":[{"type":"text","text":" comparison"},{"type":"text","text":" between"},{"type":"text","text":" any"}]}
+
+id: 1757509682724-0
+data: {"status":"in-progress","data":[{"type":"text","text":" of"},{"type":"text","text":" these"},{"type":"text","text":" places"}]}
+
+id: 1757509682826-0
+data: {"status":"in-progress","data":[{"type":"text","text":"?"},{"type":"text","text":" Or"},{"type":"text","text":" do"}]}
+
+id: 1757509682914-0
+data: {"status":"in-progress","data":[{"type":"text","text":" you"},{"type":"text","text":" want"},{"type":"text","text":" recommendations"}]}
+
+id: 1757509682953-0
+data: {"status":"in-progress","data":[{"type":"text","text":" for"},{"type":"text","text":" where"},{"type":"text","text":" to"}]}
+
+id: 1757509683076-0
+data: {"status":"in-progress","data":[{"type":"text","text":" stay"},{"type":"text","text":" or"},{"type":"text","text":" what"}]}
+
+id: 1757509683138-0
+data: {"status":"in-progress","data":[{"type":"text","text":" to"},{"type":"text","text":" do"},{"type":"text","text":" in"}]}
+
+id: 1757509683269-0
+data: {"status":"in-progress","data":[{"type":"text","text":" a"},{"type":"text","text":" particular"},{"type":"text","text":" mountain"}]}
+
+id: 1757509685724-0
+data: {"status":"in-progress","data":[{"type":"text","text":" destination"},{"type":"text","text":"?"}]}
+
+id: 1757509685976-0
+data: {"status":"done","data":{"bot_message":{"id":9357578,"body":"Here are some incredible destinations in India famous for their beautiful mountains, each offering unique landscapes and experiences:\n\n### Recommendations for Mountain Lovers 🏔️\n\n- Gangtok: Nestled in the Eastern Himalayas, this city offers breathtaking views of Kanchenjunga, lush valleys, and vibrant monasteries.\n- Shillong: Known as the \"Scotland of the East,\" it features rolling hills, pristine lakes, and charming colonial architecture.\n- Manali: A paradise for adventure seekers with snow-capped peaks, apple orchards, and access to Solang Valley and Rohtang Pass.\n- Leh-Ladakh: Famous for dramatic landscapes, high-altitude deserts, crystal-clear lakes, and Tibetan Buddhist culture.\n- Munnar: This hill station is renowned for its tea gardens, misty hills, and wildlife sanctuaries in the Western Ghats.\n- Ooty: Surrounded by the Nilgiri hills, it’s famous for scenic train rides, botanical gardens, and cool mountain air.\n\n### Conclusion\nIf you love scenic beauty, adventure, or a peaceful retreat, these destinations have something unique to offer. Would you like more details or a comparison between any of these places? Or do you want recommendations for where to stay or what to do in a particular mountain destination?","type":"bot","chat_id":2220958,"timestamp":{"epoch_millis":1757509683000},"lock_version":1,"markers":[{"type":"place","start":182,"end":189,"ref":"lo-KCpC75UV"},{"type":"place","start":264,"end":276,"ref":"at-KgYvV9Zj"},{"type":"place","start":319,"end":327,"ref":"lo-Q4VRkAFb"},{"type":"place","start":447,"end":453,"ref":"lo-YCM4bI9s"},{"type":"place","start":576,"end":586},{"type":"place","start":696,"end":702,"ref":"lo-d5jQQe74"},{"type":"place","start":817,"end":821,"ref":"lo-KBuzlZ6o"}],"places":[{"name":"Gangtok","country_code":"IN","latitude":27.33333,"longitude":88.61667,"description":"Gangtok, the capital of Sikkim, is a picturesque municipality located in East Sikkim, India. Nestled in the Himalayas, it offers","canonical_url":"https://mindtrip.ai/location/gangtok-sikkim/gangtok/lo-KCpC75UV","canonical_location":"gangtok-sikkim","canonical_name":"gangtok","location_canonical_url":"https://mindtrip.ai/location/gangtok-sikkim/gangtok/lo-KCpC75UV","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fgangtok-sikkim%2Fgangtok%2Flo-KCpC75UV%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Gangtok+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Gangtok+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fgangtok-sikkim%2Fgangtok%2Flo-KCpC75UV%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-KCpC75UV","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8258977157077294,"photos":[{"url":"/locations/0649/af3e/f8f2/025e/608b/6b8a/4e5a/49d2","width":1600,"height":1200,"additional_information":{"photographer_name":"Sreerama Chandra Murthy Kilaparthi","photographer_link":"https://maps.google.com/maps/contrib/101976477253267142583"}},{"url":"/locations/ed18/1ec7/c8df/6ca9/fad3/8cf1/e812/bdab","width":1600,"height":1200,"additional_information":{"photographer_name":"Shani kumar","photographer_link":"https://maps.google.com/maps/contrib/103704238497758617140"}},{"url":"/locations/1fa4/812b/6c98/c554/61c7/b7e7/c2af/1b14","width":1280,"height":960,"additional_information":{"photographer_name":"Banti Kar","photographer_link":"https://maps.google.com/maps/contrib/106643066296720049320"}},{"url":"/locations/085e/4722/c25d/bc3c/e30e/2f86/626f/4990","width":1200,"height":1600,"additional_information":{"photographer_name":"Kanhaiya Pathak","photographer_link":"https://maps.google.com/maps/contrib/106596234219996973506"}},{"url":"/locations/4194/9f9b/9928/1f3c/bdc7/65f5/f9a4/cbc2","width":1200,"height":1600,"additional_information":{"photographer_name":"fighter x official YT","photographer_link":"https://maps.google.com/maps/contrib/111702697341514592125"}}],"place_country":"IN","city":"Gangtok","country":"India","region":"Sikkim","continent":"Asia","formatted_address":"Gangtok, India","time_zone":"Asia/Kolkata","type":"location","categories":null,"category_label":"Sikkim, India","category":"municipality","category_tier":"city_tier","population":100286,"density":26.423859309958505},{"name":"Kangchenjunga","country_code":"IN","latitude":27.7024914,"longitude":88.14753499999999,"total_user_reviews":4145,"user_rating":4.7,"description":"Kangchenjunga, standing at 8,586 meters (28,169 feet), is the world's third-highest mountain, straddling the border between Nepa","canonical_url":"https://mindtrip.ai/attraction/sikkim/kangchenjunga/at-KgYvV9Zj","canonical_location":"sikkim","canonical_name":"kangchenjunga","location_canonical_url":"https://mindtrip.ai/location/sikkim/north-sikkim/lo-7xxvPIgZ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fsikkim%2Fkangchenjunga%2Fat-KgYvV9Zj%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Kangchenjunga+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Kangchenjunga+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Fattraction%2Fsikkim%2Fkangchenjunga%2Fat-KgYvV9Zj%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"at-KgYvV9Zj","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9406016779986534,"overall_aesthetic_rank":null,"photos":[{"url":"/attractions/1509/c5ab/9474/c323/5523/f87d/88b8/25c2","width":1600,"height":1200,"additional_information":{"photographer_name":"Walid Hasan","photographer_link":"https://maps.google.com/maps/contrib/101343438094911013140"}},{"url":"/attractions/357f/ecd4/53cf/10dd/890e/e8bd/7b02/dff9","width":1600,"height":1200,"additional_information":{"photographer_name":"Yaman rajput","photographer_link":"https://maps.google.com/maps/contrib/105522016872483982624"}},{"url":"/attractions/35e7/bc94/8d4e/fc2f/b235/19b8/3807/b05a","width":1600,"height":1067,"additional_information":{"photographer_name":"Nit Patel","photographer_link":"https://maps.google.com/maps/contrib/106619207444516578096"}},{"url":"/attractions/4b0d/76ef/313a/e9fc/6fc8/97be/adfe/69c8","width":1600,"height":1200,"additional_information":{"photographer_name":"G MiTRA","photographer_link":"https://maps.google.com/maps/contrib/112978885742811174463"}},{"url":"/attractions/4022/618f/30aa/5555/d7d9/4db4/4a80/61cd","width":1080,"height":1080,"additional_information":{"photographer_name":"Ramesh Smile","photographer_link":"https://maps.google.com/maps/contrib/109024979735710806872"}}],"place_city":"Lelep","place_state":"Koshi Province","place_country":"IN","state":"Koshi Province","country":"India","region":"Sikkim","continent":"Asia","formatted_address":"Kangchenjunga","time_zone":"Asia/Kolkata","type":"attraction","categories":["nature_site","national_state_park","trail","adventure"],"category_label":"Attraction"},{"name":"Shillong","country_code":"IN","latitude":25.59707,"longitude":91.88763,"total_user_reviews":0,"url":"http://smb.gov.in/","description":"Shillong, the capital city of Meghalaya, India, is a beautiful hill station known for its picturesque landscapes and rich cultur","canonical_url":"https://mindtrip.ai/location/shillong-meghalaya/shillong/lo-Q4VRkAFb","canonical_location":"shillong-meghalaya","canonical_name":"shillong","location_canonical_url":"https://mindtrip.ai/location/shillong-meghalaya/shillong/lo-Q4VRkAFb","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fshillong-meghalaya%2Fshillong%2Flo-Q4VRkAFb%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Shillong+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Shillong+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fshillong-meghalaya%2Fshillong%2Flo-Q4VRkAFb%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-Q4VRkAFb","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8220669912076042,"photos":[{"url":"/locations/2a12/ab7f/f435/911a/0e18/1faa/b8aa/8af9","width":1600,"height":1200,"additional_information":{"photographer_name":"swapan kumar paul","photographer_link":"https://maps.google.com/maps/contrib/106929023122724591420"}},{"url":"/locations/ae5f/1b58/cbcd/f5cb/b0fe/550a/d371/99f7","width":1600,"height":1200,"additional_information":{"photographer_name":"kkvlogs","photographer_link":"https://maps.google.com/maps/contrib/116334564965962060751"}},{"url":"/locations/d85d/f30d/648e/054b/344d/5be7/24a1/8320","width":1600,"height":1200,"additional_information":{"photographer_name":"Shashank Jathan","photographer_link":"https://maps.google.com/maps/contrib/101076705940741529647"}},{"url":"/locations/ffa1/25d5/a0ae/c001/572c/81b9/c71c/cab8","width":1280,"height":720,"additional_information":{"photographer_name":"Dr. Mohd. Atif Khan","photographer_link":"https://maps.google.com/maps/contrib/107130138439778918249"}},{"url":"/locations/105f/7827/249d/3499/ac0d/7994/82fb/7a65","width":1080,"height":1350,"additional_information":{"photographer_name":"all in one channel","photographer_link":"https://maps.google.com/maps/contrib/103216669677367665543"}}],"place_country":"IN","city":"Shillong","country":"India","region":"Meghalaya","continent":"Asia","formatted_address":"Shillong, India","time_zone":"Asia/Kolkata","type":"location","categories":[],"category_label":"Meghalaya, India","category":"city","category_tier":"city_tier","population":143229,"density":37.23618874301313},{"name":"Manali","country_code":"IN","latitude":32.23726,"longitude":77.18691,"description":"Manali is a picturesque municipality located in the Kullu District of Himachal Pradesh, India. Nestled in the northern part of t","canonical_url":"https://mindtrip.ai/location/manali-himachal-pradesh/manali/lo-YCM4bI9s","canonical_location":"manali-himachal-pradesh","canonical_name":"manali","location_canonical_url":"https://mindtrip.ai/location/manali-himachal-pradesh/manali/lo-YCM4bI9s","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmanali-himachal-pradesh%2Fmanali%2Flo-YCM4bI9s%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Manali+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Manali+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmanali-himachal-pradesh%2Fmanali%2Flo-YCM4bI9s%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-YCM4bI9s","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8468640144308985,"photos":[{"url":"/locations/0ea9/1abd/6d5c/19df/f2fc/c85c/a165/b93a","width":1600,"height":1200,"additional_information":{"photographer_name":"Hrishabh Kumar","photographer_link":"https://maps.google.com/maps/contrib/110236104164978956206"}},{"url":"/locations/5f72/93a4/1bae/c4ac/ed11/f0c4/05ad/8db9","width":1600,"height":900,"additional_information":{"photographer_name":"Swapnil Jadhav","photographer_link":"https://maps.google.com/maps/contrib/111037831397775991220"}},{"url":"/locations/f1b5/6c47/dd34/75e1/5ea0/0900/6c38/8f5c","width":1600,"height":1200,"additional_information":{"photographer_name":"Dr. Saurabh Bansal","photographer_link":"https://maps.google.com/maps/contrib/106560798279148297561"}},{"url":"/locations/f21f/cd59/db94/ce45/d21e/fa59/e35a/bca8","width":1600,"height":1200,"additional_information":{"photographer_name":"Hemanaath Mdv","photographer_link":"https://maps.google.com/maps/contrib/116922158002017062278"}},{"url":"/locations/bc46/f56e/9803/f7ef/b516/ffb6/c7b1/f771","width":1200,"height":1600,"additional_information":{"photographer_name":"Vicky Koundal","photographer_link":"https://maps.google.com/maps/contrib/116287670799529767371"}}],"place_country":"IN","city":"Manali","country":"India","region":"Himachal Pradesh","continent":"Asia","formatted_address":"Manali, India","time_zone":"Asia/Kolkata","type":"location","categories":[],"category_label":"Himachal Pradesh, India","category":"municipality","category_tier":"city_tier","population":8096,"density":37.783931738049084},{"name":"Munnar","country_code":"IN","latitude":10.0862,"longitude":77.06101,"description":"Munnar, located in the Idukki District of Kerala, India, is a picturesque hill station known for its sprawling tea plantations, ","canonical_url":"https://mindtrip.ai/location/munnar-kerala/munnar/lo-d5jQQe74","canonical_location":"munnar-kerala","canonical_name":"munnar","location_canonical_url":"https://mindtrip.ai/location/munnar-kerala/munnar/lo-d5jQQe74","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmunnar-kerala%2Fmunnar%2Flo-d5jQQe74%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Munnar+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Munnar+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fmunnar-kerala%2Fmunnar%2Flo-d5jQQe74%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-d5jQQe74","status":"OPERATIONAL","providers":["google_places"],"pscore":0.8088538159690081,"photos":[{"url":"/locations/0409/93bd/1214/e030/2711/bea7/5d90/7a4a","width":1600,"height":1067,"additional_information":{"photographer_name":"RAJ","photographer_link":"https://maps.google.com/maps/contrib/117936498567210120351"}},{"url":"/locations/4bc1/b3da/acb6/f9ea/c3a6/0be7/6f27/359c","width":1600,"height":1200,"additional_information":{"photographer_name":"JOHN JACOB","photographer_link":"https://maps.google.com/maps/contrib/104261409955891037204"}},{"url":"/locations/5dbe/fd00/6a39/8453/3ac8/38e3/7cd5/34dc","width":1600,"height":879,"additional_information":{"photographer_name":"BIJU MON VN","photographer_link":"https://maps.google.com/maps/contrib/101294983031972989591"}},{"url":"/locations/9ae1/4d9e/0411/7f7f/4725/74a6/d47a/7ca2","width":1600,"height":900,"additional_information":{"photographer_name":"vinoth Rajendran","photographer_link":"https://maps.google.com/maps/contrib/102183508747402562502"}},{"url":"/locations/d2a0/8701/f406/e367/b79f/0c9b/636e/2020","width":1600,"height":1200,"additional_information":{"photographer_name":"Diksha Shetty","photographer_link":"https://maps.google.com/maps/contrib/102619331549904490252"}}],"place_country":"IN","city":"Munnar","country":"India","region":"Kerala","continent":"Asia","formatted_address":"Munnar, India","time_zone":"Asia/Kolkata","type":"location","categories":null,"category_label":"Kerala, India","category":"municipality","category_tier":"city_tier","population":46000,"area":245,"density":17.559754849577928},{"name":"Ooty (Udhagamandalam)","country_code":"IN","latitude":11.41138,"longitude":76.69518,"description":"Ooty, also known as Udhagamandalam, is a charming hill station in the Nilgiris District of Tamil Nadu, India. Known for its brea","canonical_url":"https://mindtrip.ai/location/ooty-udhagamandalam-tamil-nadu/ooty-udhagamandalam/lo-KBuzlZ6o","canonical_location":"ooty-udhagamandalam-tamil-nadu","canonical_name":"ooty-udhagamandalam","location_canonical_url":"https://mindtrip.ai/location/ooty-udhagamandalam-tamil-nadu/ooty-udhagamandalam/lo-KBuzlZ6o","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Footy-udhagamandalam-tamil-nadu%2Footy-udhagamandalam%2Flo-KBuzlZ6o%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Ooty+%28Udhagamandalam%29+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Ooty+%28Udhagamandalam%29+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Footy-udhagamandalam-tamil-nadu%2Footy-udhagamandalam%2Flo-KBuzlZ6o%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-KBuzlZ6o","status":"OPERATIONAL","providers":["google_places"],"pscore":0.7808094610135177,"photos":[{"url":"/locations/1426/3bdb/f984/326a/f0dc/4113/f1f6/888c","width":1600,"height":900,"additional_information":{"photographer_name":"Shivam Patel","photographer_link":"https://maps.google.com/maps/contrib/107367237083798093331"}},{"url":"/locations/14ad/72d7/a587/3106/7108/f8a8/687d/2904","width":1600,"height":1200,"additional_information":{"photographer_name":"Koyel Bhowmik","photographer_link":"https://maps.google.com/maps/contrib/118249597213015682392"}},{"url":"/locations/43e0/b148/a593/90f3/4f3b/ae01/d981/ff15","width":1600,"height":1200,"additional_information":{"photographer_name":"Mohammed Ashraf kk","photographer_link":"https://maps.google.com/maps/contrib/107161947501290469095"}},{"url":"/locations/6fba/d6c2/995d/38b0/1404/0c71/b072/6f5b","width":1600,"height":742,"additional_information":{"photographer_name":"Akash Kumar","photographer_link":"https://maps.google.com/maps/contrib/107445046318638169063"}},{"url":"/locations/b8a1/fe5a/574f/dce8/7c6c/f555/3627/0af4","width":1600,"height":685,"additional_information":{"photographer_name":"R S","photographer_link":"https://maps.google.com/maps/contrib/102651331665856376432"}}],"place_country":"IN","city":"Ooty (Udhagamandalam)","country":"India","region":"Tamil Nadu","continent":"Asia","formatted_address":"Ooty (Udhagamandalam), India","time_zone":"Asia/Kolkata","type":"location","categories":["travel_agency","tea","garden","hills","mountains","rural","valley","forest"],"category_label":"Tamil Nadu, India","category":"city","category_tier":"city_tier","density":1.2184541773192017}],"inspirations":[],"has_flight_search_summary":false,"intent":{"code":"X1","travelers":{"adult_count":2,"pet_count":0,"infant_count":0,"child_count":0}},"types_of_interest":["attraction"],"suggested_questions":[{"title":"Best mountain activities?","text":"What are the most popular activities to try in these mountain destinations?"},{"title":"Family-friendly options?","text":"Which of these mountain destinations are best suited for families with children?"},{"title":"Food specialties in the mountains?","text":"What local food specialties can I try in these mountain regions?"},{"title":"Wildlife and nature spots?","text":"Which of these mountain destinations are known for their wildlife or nature reserves?"}],"matching_inspiration_id":42766,"matching_inspiration_ids":[42766],"stream_id":"stream:u-03QVYghH:2220958-YqhX4VXHAx6iTSaPCtTNLaSM"},"chat":{"id":2220958,"trip":{"id":2211073,"ref":"t-YhgioObf","name":"Darjeeling Travel Suggestions","owner_ref":"u-03QVYghH","user_refs":["u-03QVYghH"],"destination_name":"Darjeeling","destination_entity_ref":"lo-XvSwy9VJ","time_zone":"Asia/Kolkata","user_created":false,"time_frame":{},"draft_start_date":{"year":2025,"month":11,"day":26},"draft_duration":5,"travelers":{"adult_count":2,"pet_count":0,"infant_count":0,"child_count":0},"rooms":[{"adult_count":2,"child_ages":[],"pet_count":0}],"stops_area_entity_ref":"lo-XvSwy9VJ","stops_area_name":"Darjeeling","roadtrip":false,"destination":{"name":"Darjeeling","country_code":"IN","latitude":27.03938,"longitude":88.26388,"description":"Darjeeling, located in the Darjeeling District of West Bengal, India, is a picturesque hill station known for its breathtaking v","canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","canonical_location":"darjeeling-west-bengal","canonical_name":"darjeeling","location_canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Darjeeling+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Darjeeling+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-XvSwy9VJ","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9826455533957582,"photos":[{"url":"/locations/61b0/c29b/fac7/519f/a352/a517/cdb1/23a5","width":1600,"height":720,"additional_information":{"photographer_name":"Rajendra Kumal","photographer_link":"https://maps.google.com/maps/contrib/110459025425135527384"}},{"url":"/locations/7939/159b/d510/80fa/b969/035a/10de/7ac6","width":1600,"height":1200,"additional_information":{"photographer_name":"MOUSUMI SARKAR","photographer_link":"https://maps.google.com/maps/contrib/104436417557020974402"}},{"url":"/locations/ebbb/7dd2/6452/dfc8/0662/de40/e801/0e88","width":1600,"height":1067,"additional_information":{"photographer_name":"Devjyoti Sarkar","photographer_link":"https://maps.google.com/maps/contrib/112808490044254461845"}},{"url":"/locations/ffa4/168b/066c/188e/fdd9/2a50/86ed/1877","width":1600,"height":1200,"additional_information":{"photographer_name":"Kakali Das","photographer_link":"https://maps.google.com/maps/contrib/115505040895331960577"}},{"url":"/locations/ca1a/0682/efce/86c1/3c05/dfba/061e/4775","width":1280,"height":958,"additional_information":{"photographer_name":"Prolay Halder","photographer_link":"https://maps.google.com/maps/contrib/113415716664587449421"}}],"place_country":"IN","city":"Darjeeling","country":"India","region":"West Bengal","continent":"Asia","formatted_address":"Darjeeling, India","time_zone":"Asia/Kolkata","type":"location","categories":["tea","hills","mountains","rural"],"category_label":"West Bengal, India","category":"city","category_tier":"city_tier","population":118805,"density":44.61231645497394},"major_stops_details":[{"entity_ref":"lo-XvSwy9VJ","stop_type":"Stay","location":{"name":"Darjeeling","country_code":"IN","latitude":27.03938,"longitude":88.26388,"description":"Darjeeling, located in the Darjeeling District of West Bengal, India, is a picturesque hill station known for its breathtaking v","canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","canonical_location":"darjeeling-west-bengal","canonical_name":"darjeeling","location_canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Darjeeling+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Darjeeling+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-XvSwy9VJ","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9826455533957582,"photos":[{"url":"/locations/61b0/c29b/fac7/519f/a352/a517/cdb1/23a5","width":1600,"height":720,"additional_information":{"photographer_name":"Rajendra Kumal","photographer_link":"https://maps.google.com/maps/contrib/110459025425135527384"}},{"url":"/locations/7939/159b/d510/80fa/b969/035a/10de/7ac6","width":1600,"height":1200,"additional_information":{"photographer_name":"MOUSUMI SARKAR","photographer_link":"https://maps.google.com/maps/contrib/104436417557020974402"}},{"url":"/locations/ebbb/7dd2/6452/dfc8/0662/de40/e801/0e88","width":1600,"height":1067,"additional_information":{"photographer_name":"Devjyoti Sarkar","photographer_link":"https://maps.google.com/maps/contrib/112808490044254461845"}},{"url":"/locations/ffa4/168b/066c/188e/fdd9/2a50/86ed/1877","width":1600,"height":1200,"additional_information":{"photographer_name":"Kakali Das","photographer_link":"https://maps.google.com/maps/contrib/115505040895331960577"}},{"url":"/locations/ca1a/0682/efce/86c1/3c05/dfba/061e/4775","width":1280,"height":958,"additional_information":{"photographer_name":"Prolay Halder","photographer_link":"https://maps.google.com/maps/contrib/113415716664587449421"}}],"place_country":"IN","city":"Darjeeling","country":"India","region":"West Bengal","continent":"Asia","formatted_address":"Darjeeling, India","time_zone":"Asia/Kolkata","type":"location","categories":["tea","hills","mountains","rural"],"category_label":"West Bengal, India","category":"city","category_tier":"city_tier","population":118805,"density":44.61231645497394}}],"stops_area":{"name":"Darjeeling","country_code":"IN","latitude":27.03938,"longitude":88.26388,"description":"Darjeeling, located in the Darjeeling District of West Bengal, India, is a picturesque hill station known for its breathtaking v","canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","canonical_location":"darjeeling-west-bengal","canonical_name":"darjeeling","location_canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Darjeeling+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Darjeeling+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-XvSwy9VJ","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9826455533957582,"photos":[{"url":"/locations/61b0/c29b/fac7/519f/a352/a517/cdb1/23a5","width":1600,"height":720,"additional_information":{"photographer_name":"Rajendra Kumal","photographer_link":"https://maps.google.com/maps/contrib/110459025425135527384"}},{"url":"/locations/7939/159b/d510/80fa/b969/035a/10de/7ac6","width":1600,"height":1200,"additional_information":{"photographer_name":"MOUSUMI SARKAR","photographer_link":"https://maps.google.com/maps/contrib/104436417557020974402"}},{"url":"/locations/ebbb/7dd2/6452/dfc8/0662/de40/e801/0e88","width":1600,"height":1067,"additional_information":{"photographer_name":"Devjyoti Sarkar","photographer_link":"https://maps.google.com/maps/contrib/112808490044254461845"}},{"url":"/locations/ffa4/168b/066c/188e/fdd9/2a50/86ed/1877","width":1600,"height":1200,"additional_information":{"photographer_name":"Kakali Das","photographer_link":"https://maps.google.com/maps/contrib/115505040895331960577"}},{"url":"/locations/ca1a/0682/efce/86c1/3c05/dfba/061e/4775","width":1280,"height":958,"additional_information":{"photographer_name":"Prolay Halder","photographer_link":"https://maps.google.com/maps/contrib/113415716664587449421"}}],"place_country":"IN","city":"Darjeeling","country":"India","region":"West Bengal","continent":"Asia","formatted_address":"Darjeeling, India","time_zone":"Asia/Kolkata","type":"location","categories":["tea","hills","mountains","rural"],"category_label":"West Bengal, India","category":"city","category_tier":"city_tier","population":118805,"density":44.61231645497394},"collaboration":false,"trip_stops":[],"major_stops":[{"entity_ref":"lo-XvSwy9VJ","stop_type":"Stay","location":{"name":"Darjeeling","country_code":"IN","latitude":27.03938,"longitude":88.26388,"description":"Darjeeling, located in the Darjeeling District of West Bengal, India, is a picturesque hill station known for its breathtaking v","canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","canonical_location":"darjeeling-west-bengal","canonical_name":"darjeeling","location_canonical_url":"https://mindtrip.ai/location/darjeeling-west-bengal/darjeeling/lo-XvSwy9VJ","shareable_urls":[{"name":"Facebook","icon":"facebook","url":"https://www.facebook.com/dialog/feed?app_id=987849839654033&link=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dfacebook&name=Check+out+Darjeeling+on+Mindtrip&redirect_uri=https%3A%2F%2Fwww.facebook.com"},{"name":"X","icon":"x","url":"https://twitter.com/intent/tweet?text=Check+out+Darjeeling+on+Mindtrip&url=https%3A%2F%2Fmindtrip.ai%2Flocation%2Fdarjeeling-west-bengal%2Fdarjeeling%2Flo-XvSwy9VJ%3Futm_campaign%3Dshare%26utm_medium%3Dsocial%26utm_source%3Dx"}],"entity_ref":"lo-XvSwy9VJ","status":"OPERATIONAL","providers":["google_places"],"pscore":0.9826455533957582,"photos":[{"url":"/locations/61b0/c29b/fac7/519f/a352/a517/cdb1/23a5","width":1600,"height":720,"additional_information":{"photographer_name":"Rajendra Kumal","photographer_link":"https://maps.google.com/maps/contrib/110459025425135527384"}},{"url":"/locations/7939/159b/d510/80fa/b969/035a/10de/7ac6","width":1600,"height":1200,"additional_information":{"photographer_name":"MOUSUMI SARKAR","photographer_link":"https://maps.google.com/maps/contrib/104436417557020974402"}},{"url":"/locations/ebbb/7dd2/6452/dfc8/0662/de40/e801/0e88","width":1600,"height":1067,"additional_information":{"photographer_name":"Devjyoti Sarkar","photographer_link":"https://maps.google.com/maps/contrib/112808490044254461845"}},{"url":"/locations/ffa4/168b/066c/188e/fdd9/2a50/86ed/1877","width":1600,"height":1200,"additional_information":{"photographer_name":"Kakali Das","photographer_link":"https://maps.google.com/maps/contrib/115505040895331960577"}},{"url":"/locations/ca1a/0682/efce/86c1/3c05/dfba/061e/4775","width":1280,"height":958,"additional_information":{"photographer_name":"Prolay Halder","photographer_link":"https://maps.google.com/maps/contrib/113415716664587449421"}}],"place_country":"IN","city":"Darjeeling","country":"India","region":"West Bengal","continent":"Asia","formatted_address":"Darjeeling, India","time_zone":"Asia/Kolkata","type":"location","categories":["tea","hills","mountains","rural"],"category_label":"West Bengal, India","category":"city","category_tier":"city_tier","population":118805,"density":44.61231645497394}}],"package_booked":true},"group":false}}}
+

@@ -351,3 +351,14 @@ console.log(result.finalOutput);
 - **Streaming**: Real-time response delivery for better user experience
 
 Each example demonstrates core functionality with travel-related use cases, showing how to build sophisticated AI assistants that can collaborate, use tools safely, and provide personalized, real-time service to travelers.
+
+
+
+
+
+
+
+
+data: {"type":"delta","textDelta":"That","text":"{\"text\":\"That","city":null,"done":false}
+
+data: {"type":"delta","textDelta":" sounds","text":"{\"text\":\"That sounds","city":null,"done":false}

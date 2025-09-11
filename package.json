@@ -10,7 +10,7 @@
   "scripts": {
     
     "start": "ts-node src/agents/agents.ts",
-    "stream": "ts-node src/agents/api.ts",
+    "stream": "ts-node src/agents/api-2.ts",
     "test" : "ts-node src/agents/mem.ts",
     "manager":"ts-node src/agents/manager.ts",
     "flow":"ts-node src/agents/flow.ts"
