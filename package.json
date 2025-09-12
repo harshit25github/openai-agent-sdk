@@ -13,7 +13,8 @@
     "stream": "ts-node src/agents/api-2.ts",
     "test" : "ts-node src/agents/mem.ts",
     "manager":"ts-node src/agents/manager.ts",
-    "flow":"ts-node src/agents/flow.ts"
+    "flow":"ts-node src/agents/flow.ts",
+    "server":"ts-node src/agents/server.ts"
   },
   "dependencies": {
     "@openai/agents": "^0.0.17",
