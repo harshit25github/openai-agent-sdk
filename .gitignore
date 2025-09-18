@@ -1,3 +1,7 @@
+
+# Ignore Cursor workspace metadata
+.cursor/
 node_modules
 .env
 thread.json
+./.cursor
