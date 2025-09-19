@@ -33,6 +33,15 @@ export interface AppContext {
     budgetAmount?: number; // numeric value only
     currency?: string;     // e.g., INR, USD
     bookingConfirmed?: boolean;
+    itinerary?: Array<{
+      day?: number;
+      date?: string;
+      morning?: string[];
+      afternoon?: string[];
+      evening?: string[];
+    }>;
+    itineraryStatus?: 'fresh' | 'stale' | null;
+    lastItinerarySignature?: string | null;
   };
   logger: {
     log: (...args: any[]) => void;
@@ -62,6 +71,14 @@ const captureTripParams = tool<ReturnType<typeof captureTripParamsSchema>, AppCo
     const ctx = runContext?.context;
     if (!ctx) return 'No context available';
 
+    // Detect date change to clear any stale itinerary
+    const prevStart = ctx.trip.startDate;
+    const prevEnd = ctx.trip.endDate;
+    const prevSig = ctx.trip.lastItinerarySignature ?? null;
+    const nextStart = args.startDate ?? prevStart;
+    const nextEnd = args.endDate ?? prevEnd;
+    const datesChanged = (args.startDate && args.startDate !== prevStart) || (args.endDate && args.endDate !== prevEnd);
+
     const updates: Partial<AppContext['trip']> = {};
     if (args.originCity) updates.originCity = args.originCity;
     if (args.destinationCity) updates.destinationCity = args.destinationCity;
@@ -71,7 +88,30 @@ const captureTripParams = tool<ReturnType<typeof captureTripParamsSchema>, AppCo
     if (typeof args.budgetAmount === 'number') updates.budgetAmount = args.budgetAmount;
     if (args.currency) updates.currency = args.currency;
 
+    // Apply updates
     ctx.trip = { ...ctx.trip, ...updates };
+
+    // Compute signature of critical fields to decide itinerary staleness
+    const critical = {
+      destinationCity: ctx.trip.destinationCity ?? null,
+      startDate: ctx.trip.startDate ?? null,
+      endDate: ctx.trip.endDate ?? null,
+      adults: ctx.trip.adults ?? null,
+      budgetAmount: ctx.trip.budgetAmount ?? null,
+    };
+    const newSig = JSON.stringify(critical);
+    ctx.trip.lastItinerarySignature = newSig;
+
+    if (newSig !== prevSig) {
+      ctx.trip.itineraryStatus = 'stale';
+    }
+
+    // If dates changed, clear existing itinerary to avoid stale plans
+    if (datesChanged && Array.isArray(ctx.trip.itinerary) && ctx.trip.itinerary.length > 0) {
+      ctx.logger.log('[capture_trip_params] Dates changed from', prevStart, prevEnd, 'to', nextStart, nextEnd, '— marking existing itinerary stale');
+      // Keep old itinerary but mark it stale; safety net or next plan will overwrite
+      ctx.trip.itineraryStatus = 'stale';
+    }
     ctx.logger.log('[capture_trip_params] Trip context updated:', ctx.trip);
     return 'Trip parameters captured in local context.';
   },
@@ -111,6 +151,120 @@ function confirmBookingSchema() {
   return z.object({
     confirm: z.boolean().describe('Set true to confirm booking.'),
   });
+}
+
+// Tool to capture itinerary day segments into local context
+const captureItineraryDays = tool<ReturnType<typeof captureItineraryDaysSchema>, AppContext>({
+  name: 'capture_itinerary_days',
+  description: 'Persist a day-wise itinerary into local context with morning/afternoon/evening segments.',
+  parameters: captureItineraryDaysSchema(),
+  execute: async (
+    args: z.infer<ReturnType<typeof captureItineraryDaysSchema>>,
+    runContext?: RunContext<AppContext>,
+  ): Promise<string> => {
+    const ctx = runContext?.context;
+    if (!ctx) return 'No context available';
+    const days = Array.isArray(args.days) ? args.days : [];
+    const normalized = days.map((d) => ({
+      day: d.day ?? undefined,
+      date: d.date ?? undefined,
+      morning: d.morning ?? [],
+      afternoon: d.afternoon ?? [],
+      evening: d.evening ?? [],
+    }));
+    ctx.trip.itinerary = normalized;
+    ctx.logger.log('[capture_itinerary_days] Itinerary saved with', normalized.length, 'days');
+    return `Saved ${normalized.length} itinerary day(s).`;
+  },
+});
+
+function captureItineraryDaysSchema() {
+  return z.object({
+    days: z.array(z.object({
+      day: z.number().int().positive().nullable().optional(),
+      date: z.string().describe('YYYY-MM-DD').nullable().optional(),
+      morning: z.array(z.string()).nullable().optional(),
+      afternoon: z.array(z.string()).nullable().optional(),
+      evening: z.array(z.string()).nullable().optional(),
+    })).describe('A list of itinerary days with time-of-day segments.'),
+  });
+}
+
+// -----------------------------------------------------------------------------
+// Post-run safety net: parse itinerary text and persist if model forgot
+// -----------------------------------------------------------------------------
+function parseItineraryFromText(text: string): Array<{
+  day?: number;
+  date?: string;
+  morning?: string[];
+  afternoon?: string[];
+  evening?: string[];
+}> {
+  const lines = text.split(/\r?\n/);
+  const days: Array<{
+    day?: number;
+    date?: string;
+    morning: string[];
+    afternoon: string[];
+    evening: string[];
+  }> = [];
+
+  let current: { day?: number; date?: string; morning: string[]; afternoon: string[]; evening: string[] } | null = null;
+  let currentSegment: 'morning' | 'afternoon' | 'evening' | null = null;
+
+  const dayHeader = /^\s*Day\s*(\d+)?(?:\s*\(([^)]+)\))?\s*[:\-]?/i;
+  const segHeader = /^\s*(?:[-•]\s*)?(Morning|Afternoon|Evening)\s*:\s*(.*)$/i;
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+
+    const mDay = line.match(dayHeader);
+    if (mDay) {
+      if (current) days.push(current);
+      const dayNum = mDay[1] ? Number(mDay[1]) : undefined;
+      // Attempt to normalize to YYYY-MM-DD within parentheses if present; otherwise keep as-is
+      const dateText = mDay[2];
+      const dateIso = dateText && /\d{4}-\d{2}-\d{2}/.test(dateText) ? (dateText.match(/\d{4}-\d{2}-\d{2}/)![0]) : undefined;
+      current = { day: dayNum, date: dateIso, morning: [], afternoon: [], evening: [] };
+      currentSegment = null;
+      continue;
+    }
+
+    const mSeg = line.match(segHeader);
+    if (mSeg) {
+      if (!current) {
+        current = { morning: [], afternoon: [], evening: [] };
+      }
+      const seg = mSeg[1].toLowerCase() as 'morning' | 'afternoon' | 'evening';
+      currentSegment = seg;
+      const rest = mSeg[2]?.trim();
+      if (rest) current[seg].push(rest);
+      continue;
+    }
+
+    // If continuing bullet under current segment
+    if (current && currentSegment && /^[-•]/.test(line)) {
+      const content = line.replace(/^[-•]\s*/, '').trim();
+      if (content) current[currentSegment].push(content);
+      continue;
+    }
+  }
+
+  if (current) days.push(current);
+  return days.filter(d => (d.morning.length + d.afternoon.length + d.evening.length) > 0);
+}
+
+async function ensureItinerarySavedIfMissing(outputText: string, appContext: AppContext): Promise<void> {
+  const hasPlanText = /\bDay\b/i.test(outputText) && /(Morning|Afternoon|Evening)\s*:/i.test(outputText);
+  const hasItin = Array.isArray(appContext.trip.itinerary) && appContext.trip.itinerary.length > 0;
+  if (!hasPlanText || hasItin) return;
+
+  const parsed = parseItineraryFromText(outputText);
+  if (parsed.length === 0) return;
+  // Directly persist into local context (safety net path)
+  appContext.trip.itinerary = parsed;
+  appContext.logger.log('[safety_net] Parsed and saved itinerary days:', parsed.length);
 }
 
 // -----------------------------------------------------------------------------
@@ -218,16 +372,22 @@ const tripPlannerAgent = new Agent<AppContext>({
   instructions: (rc?: RunContext<AppContext>) => {
     // Reuse the detailed Trip Planner system prompt from prompts.ts, and append a local context snapshot
     return [
-      AGENT_PROMPTS.TRIP_PLANNER,
+      AGENT_PROMPTS.trpPromt,
       '',
       'Tool policy (required): Before providing or refining any plan, extract any of',
       'originCity, destinationCity, startDate (YYYY-MM-DD), endDate (YYYY-MM-DD), adults, budgetAmount, currency,',
       'then call capture_trip_params to persist these into the shared local context. Normalize currencies (₹ → INR).',
       'Include only fields you can confidently extract; omit unknowns.',
+      '',
+      'Itinerary persistence (required when you produce a day-wise plan):',
+      '- After you present the itinerary, immediately call capture_itinerary_days with a days array.',
+      '- Each day item should include day number and/or date if known, and arrays for morning, afternoon, evening with short activity strings.',
+      '- Ensure the tool payload matches what you just presented to the user.',
+      '- If dates have changed since the previous plan, recreate the itinerary and re-save using capture_itinerary_days (overwrite any prior itinerary).',
       contextSnapshot(rc),
     ].join('\n');
   },
-  tools: [captureTripParams],
+  tools: [captureTripParams, captureItineraryDays],
   modelSettings:{toolChoice: 'required'}
 });
 
@@ -239,12 +399,28 @@ tripPlannerAgent.on('agent_start', (ctx, agent) => {
   // @ts-ignore best-effort peek at local context.trip if present
   console.log(`[${agent.name}] ctx.trip:`, (ctx as any)?.context?.trip);
 });
-tripPlannerAgent.on('agent_end', (ctx, output) => {
+tripPlannerAgent.on('agent_end', async (ctx, output) => {
   // eslint-disable-next-line no-console
   console.log('[agent] produced:', output);
   // eslint-disable-next-line no-console
   // @ts-ignore best-effort peek at local context.trip if present
   console.log('[agent] ctx.trip at end:', (ctx as any)?.context?.trip);
+  try {
+    // @ts-ignore
+    const appCtx = (ctx as any)?.context as AppContext | undefined;
+    if (!appCtx) return;
+    const isStale = appCtx.trip.itineraryStatus === 'stale' || !Array.isArray(appCtx.trip.itinerary) || appCtx.trip.itinerary.length === 0;
+    const finalText = typeof output === 'string' ? output : String(output ?? '');
+    if (isStale && finalText) {
+      await ensureItinerarySavedIfMissing(String(finalText), appCtx);
+      if (Array.isArray(appCtx.trip.itinerary) && appCtx.trip.itinerary.length > 0) {
+        appCtx.trip.itineraryStatus = 'fresh';
+      }
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('[agent_end safety_net] failed', e);
+  }
 });
 
 // 3) Gateway Agent — routes requests; NEVER produces domain content
@@ -301,6 +477,13 @@ export async function demoContextManagement() {
   const turn1 = await run(gatewayAgent, [user(turn1UserMsg)], { context: appContext });
   appContext.logger.log('\n[TURN 1 OUTPUT]\n', turn1.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER TURN 1]\n', JSON.stringify(appContext.trip, null, 2));
+  // Also inspect internal state context (SDK internal, best-effort)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const turn1StateCtx: any = (turn1 as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN 1 STATE CONTEXT]\n', turn1StateCtx);
+  // eslint-disable-next-line no-console
+  console.log('[TURN 1 STATE CONTEXT trip]\n', turn1StateCtx?.trip);
 
   // 2) User asks to proceed with booking; we run the Booking Agent with the SAME local context
   const turn2UserMsg = 'Please book hotels and flights for 5 nights starting 2026-05-03.';
@@ -312,6 +495,12 @@ export async function demoContextManagement() {
   const turn2 = await run(bookingAgent, [user(turn2UserMsg)], { context: appContext });
   appContext.logger.log('\n[TURN 2 OUTPUT]\n', turn2.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER TURN 2]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const turn2StateCtx: any = (turn2 as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN 2 STATE CONTEXT]\n', turn2StateCtx);
+  // eslint-disable-next-line no-console
+  console.log('[TURN 2 STATE CONTEXT trip]\n', turn2StateCtx?.trip);
 }
 
 // Additional demos: multi-turn incremental context sharing
@@ -332,6 +521,12 @@ export async function demoMultiTurnGradualContext() {
   const outA = await run(gatewayAgent, [user(a)], { context: appContext });
   appContext.logger.log('\n[TURN A OUTPUT]\n', outA.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER A]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const outAState: any = (outA as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN A STATE CONTEXT]\n', outAState);
+  // eslint-disable-next-line no-console
+  console.log('[TURN A STATE CONTEXT trip]\n', outAState?.trip);
 
   // Turn B: user shares origin later
   const b = 'We will be flying from Mumbai.';
@@ -343,6 +538,12 @@ export async function demoMultiTurnGradualContext() {
   const outB = await run(gatewayAgent, [user(b)], { context: appContext });
   appContext.logger.log('\n[TURN B OUTPUT]\n', outB.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER B]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const outBState: any = (outB as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN B STATE CONTEXT]\n', outBState);
+  // eslint-disable-next-line no-console
+  console.log('[TURN B STATE CONTEXT trip]\n', outBState?.trip);
 
   // Turn C: user decides destination
   const c = 'Destination is Rome.';
@@ -354,6 +555,12 @@ export async function demoMultiTurnGradualContext() {
   const outC = await run(gatewayAgent, [user(c)], { context: appContext });
   appContext.logger.log('\n[TURN C OUTPUT]\n', outC.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER C]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const outCState: any = (outC as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN C STATE CONTEXT]\n', outCState);
+  // eslint-disable-next-line no-console
+  console.log('[TURN C STATE CONTEXT trip]\n', outCState?.trip);
 
   // Turn D: user provides budget with currency symbol
   const d = 'Budget is ₹150000 per person.';
@@ -365,6 +572,12 @@ export async function demoMultiTurnGradualContext() {
   const outD = await run(gatewayAgent, [user(d)], { context: appContext });
   appContext.logger.log('\n[TURN D OUTPUT]\n', outD.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER D]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const outDState: any = (outD as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN D STATE CONTEXT]\n', outDState);
+  // eslint-disable-next-line no-console
+  console.log('[TURN D STATE CONTEXT trip]\n', outDState?.trip);
 
   // Turn E: user provides exact start date
   const e = 'We can start on 2026-05-03 for 5 nights.';
@@ -376,6 +589,12 @@ export async function demoMultiTurnGradualContext() {
   const outE = await run(gatewayAgent, [user(e)], { context: appContext });
   appContext.logger.log('\n[TURN E OUTPUT]\n', outE.finalOutput);
   appContext.logger.log('\n[CONTEXT AFTER E]\n', JSON.stringify(appContext.trip, null, 2));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const outEState: any = (outE as any)?.state?._context;
+  // eslint-disable-next-line no-console
+  console.log('\n[TURN E STATE CONTEXT]\n', outEState);
+  // eslint-disable-next-line no-console
+  console.log('[TURN E STATE CONTEXT trip]\n', outEState?.trip);
 }
 
 export async function demoLateCurrencyAndDates() {
@@ -393,6 +612,7 @@ export async function demoLateCurrencyAndDates() {
   console.log('\n[LATE-1 USER]\n', t1);
   await run(gatewayAgent, [user(t1)], { context: appContext });
   appContext.logger.log('\n[LATE-1]\n', JSON.stringify(appContext.trip, null, 2));
+  // Not capturing run result for state here; keep appContext as source of truth
 
   const t2 = 'Dates 2026-07-10 to 2026-07-16.';
   if (USE_TEST_EXTRACTOR) {
@@ -413,9 +633,54 @@ export async function demoLateCurrencyAndDates() {
   appContext.logger.log('\n[LATE-3]\n', JSON.stringify(appContext.trip, null, 2));
 }
 
+// Single-turn: user provides all details → gateway → trip planner → full itinerary
+export async function demoAllDetailsSingleTurn() {
+  const appContext: AppContext = {
+    userInfo: { name: 'Harsh', uid: 3 },
+    trip: {},
+    logger: console,
+  };
+
+  const msg = 'From Mumbai to Rome, 2026-05-03 to 2026-05-08, 2 adults, total budget ₹300000, interests: history and food. Please create a day-wise itinerary.';
+  // eslint-disable-next-line no-console
+  console.log('\n[ALL-DETAILS USER]\n', msg);
+  const res = await run(gatewayAgent, [user(msg)], { context: appContext });
+  // eslint-disable-next-line no-console
+  console.log('\n[ALL-DETAILS OUTPUT]\n', res.finalOutput);
+  // eslint-disable-next-line no-console
+  console.log('\n[ALL-DETAILS ctx.trip]\n', JSON.stringify(appContext.trip, null, 2));
+}
+
+// Change duration after initial itinerary, and verify itinerary is recreated
+export async function demoChangeDurationRecreateItinerary() {
+  const appContext: AppContext = {
+    userInfo: { name: 'Harsh', uid: 4 },
+    trip: {},
+    logger: console,
+  };
+
+  const first = 'From Mumbai to Rome, 2026-05-03 to 2026-05-08, 2 adults, total budget ₹300000, interests: history and food. Please create a day-wise itinerary.';
+  console.log('\n[RECREATE-1 USER]\n', first);
+  const res1 = await run(gatewayAgent, [user(first)], { context: appContext });
+  console.log('\n[RECREATE-1 OUTPUT]\n', res1.finalOutput);
+  await ensureItinerarySavedIfMissing(String(res1.finalOutput ?? ''), appContext);
+  console.log('\n[RECREATE-1 ctx.trip]\n', JSON.stringify(appContext.trip, null, 2));
+  const beforeDays = appContext.trip.itinerary?.length || 0;
+  console.log('[RECREATE-1 itinerary days]', beforeDays);
+
+  const second = 'Change dates to 2026-05-04 to 2026-05-10 (6 nights) and recreate the day-wise itinerary, please.';
+  console.log('\n[RECREATE-2 USER]\n', second);
+  const res2 = await run(gatewayAgent, [user(second)], { context: appContext });
+  console.log('\n[RECREATE-2 OUTPUT]\n', res2.finalOutput);
+  await ensureItinerarySavedIfMissing(String(res2.finalOutput ?? ''), appContext);
+  console.log('\n[RECREATE-2 ctx.trip]\n', JSON.stringify(appContext.trip, null, 2));
+  const afterDays = appContext.trip.itinerary?.length || 0;
+  console.log('[RECREATE-2 itinerary days]', afterDays);
+}
+
 // Allow running this file directly: ts-node src/agents/context-example.ts
 if (require.main === module) {
-    demoMultiTurnGradualContext().catch((err) => {
+    demoChangeDurationRecreateItinerary().catch((err) => {
     // eslint-disable-next-line no-console
     console.error(err);
     process.exit(1);
